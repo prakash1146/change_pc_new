@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 120px;
+}
+
+.home-section {
+  display: block;
+  /* 88px topbar + 24px breathing room below it. */
+  scroll-margin-top: 112px;
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+/* The first (Usage/dashboard) section is the landing view — it must sit at the
+   true top of the page. Without this, proximity scroll-snap snaps it to its
+   scroll-margin-top (112px) on reload, pushing the page down into empty space. */
+.home-section:first-child {
+  scroll-snap-align: none;
+}
+
+/* Vertical rhythm between nested child components (e.g. Usage section
+   stacks dashboard / prompts / users with no inner section headers). */
+.home-section > * + * {
+  margin-top: 32px;
+  display: block;
+}
+
+.home-section + .home-section {
+  margin-top: 48px;
+}

@@ -1,0 +1,42 @@
+<section class="vpu-registry-card">
+  <header class="vpu-registry-head">
+    <h2 class="vpu-registry-title">Engagement by VPU</h2>
+  </header>
+
+  <table class="vpu-registry-table">
+    <thead>
+      <tr>
+        @for (col of [
+          { key: 'code',         label: 'VPU Code'              },
+          { key: 'name',         label: 'VPU Name'              },
+          { key: 'uniqueUsers',  label: 'No. of Unique Users'   },
+          { key: 'adoptionPct',  label: 'Adoption Rate within VPU' },
+          { key: 'growthPct',    label: 'MoM Growth'            }
+        ]; track col.key) {
+          <th>
+            <button type="button" class="vpu-sort-th" (click)="toggleVpuSort($any(col.key))">
+              {{ col.label }}
+              <tabler-icon
+                class="vpu-sort-caret"
+                [class.is-active]="vpuSortKey() === col.key"
+                [icon]="vpuSortKey() === col.key && vpuSortDir() === 'asc' ? 'arrow-up' : 'arrow-down'"
+                [size]="12"
+              />
+            </button>
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (v of sortedVpuRows(); track v.code) {
+        <tr>
+          <td class="vpu-code">{{ v.code }}</td>
+          <td>{{ v.name }}</td>
+          <td>{{ v.uniqueUsers }}</td>
+          <td>{{ v.adoptionPct }}%</td>
+          <td>+{{ v.growthPct }}%</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

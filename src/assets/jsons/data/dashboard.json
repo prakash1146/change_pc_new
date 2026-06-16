@@ -1,0 +1,265 @@
+{
+  "kpis": [
+    {
+      "title": "K360 Adoption",
+      "metrics": [
+        { "value": "3,095 / ~21,000", "delta": "+24 new" }
+      ],
+      "sub": "unique active users out of staff",
+      "barPct": 78
+    },
+    {
+      "title": "Engagement",
+      "metrics": [
+        { "value": "89.3%", "delta": "+18%" }
+      ],
+      "sub": "retention rate",
+      "secondaryMetrics": [
+        { "value": "3",     "label": "avg visits/user" },
+        { "value": "2,923", "label": "repeat users" }
+      ]
+    },
+    {
+      "title": "Usage Volume",
+      "metrics": [
+        { "value": "30,020" }
+      ],
+      "sub": "total page views",
+      "secondaryMetrics": [
+        { "value": "3.2",   "label": "depth/session" },
+        { "value": "50.5%", "label": "intent clarity" }
+      ]
+    },
+    {
+      "title": "Prompts",
+      "metrics": [
+        { "value": "639", "delta": "+18%" }
+      ],
+      "sub": "submitted to K360"
+    },
+    {
+      "title": "Downloads",
+      "metrics": [
+        { "value": "120", "delta": "+18%" }
+      ],
+      "sub": "documents downloaded"
+    }
+  ],
+
+  "regionNames": {
+    "afe": "Eastern & Southern Africa",
+    "afw": "Western & Central Africa",
+    "eap": "East Asia & Pacific",
+    "eca": "Europe & Central Asia",
+    "lac": "Latin America & Caribbean",
+    "mna": "Middle East & North Africa",
+    "sar": "South Asia",
+    "oth": "Other"
+  },
+
+  "regionContext": {
+    "afe": {
+      "topSector": "Climate",
+      "topics": ["Climate Adaptation & Resilience", "Water & Infrastructure", "Agricultural Resilience"],
+      "roles": ["Transport Specialist", "Governance Specialist", "Environmental Specialist"],
+      "taskTopics": ["Infrastructure Supervision", "Consulting Services"],
+      "collections": ["Climate Adaptation Toolkit", "Water Policy Notes", "Debt Sustainability Analysis"],
+      "agents": ["Sherlock", "Lessons Explorer", "Translate"],
+      "taskAgent": "TOR Genie",
+      "vpu": "AFEVP"
+    },
+    "afw": {
+      "topSector": "Energy",
+      "topics": ["Energy Access", "Trade Corridors", "Education Reform"],
+      "roles": ["Energy Specialist", "Public Finance Lead", "Health Specialist"],
+      "taskTopics": ["Power Sector Diagnostics", "Education TOR"],
+      "collections": ["Regional Energy Strategy", "Trade Corridor Studies", "Education Sector Notes"],
+      "agents": ["Sherlock", "Lessons Explorer", "Translate"],
+      "taskAgent": "TOR Genie",
+      "vpu": "AFWVP"
+    },
+    "eap": {
+      "topSector": "Urbanization",
+      "topics": ["Urban Development", "Disaster Resilience", "Maritime Trade"],
+      "roles": ["Urban Planner", "DRM Specialist", "Transport Specialist"],
+      "taskTopics": ["Urban Project TOR", "DRM Synthesis"],
+      "collections": ["Urban Resilience Handbook", "Pacific Climate Briefs", "East Asia Country Reports"],
+      "agents": ["Sherlock", "Lessons Explorer", "Translate"],
+      "taskAgent": "TOR Genie",
+      "vpu": "EAPVP"
+    },
+    "eca": {
+      "topSector": "Macroeconomics",
+      "topics": ["Macroeconomic Stability", "Energy Transition", "Pension Reform"],
+      "roles": ["Macro Economist", "Energy Specialist", "Social Protection Lead"],
+      "taskTopics": ["DPL Concept Notes", "Pension Reform TOR"],
+      "collections": ["ECA Macro Watch", "Energy Transition Library", "Social Protection Briefs"],
+      "agents": ["Sherlock", "Lessons Explorer", "Translate"],
+      "taskAgent": "TOR Genie",
+      "vpu": "ECAVP"
+    },
+    "lac": {
+      "topSector": "Inclusion",
+      "topics": ["Citizen Security", "Tax Reform", "Tourism Recovery"],
+      "roles": ["Fiscal Economist", "Justice Specialist", "Tourism Lead"],
+      "taskTopics": ["Tax Diagnostic TOR", "Citizen Security Synthesis"],
+      "collections": ["LAC Fiscal Notes", "Citizen Security Atlas", "Tourism Recovery Studies"],
+      "agents": ["Sherlock", "Lessons Explorer", "Translate"],
+      "taskAgent": "TOR Genie",
+      "vpu": "LACVP"
+    },
+    "mna": {
+      "topSector": "Youth",
+      "topics": ["Youth Employment", "Water Scarcity", "Energy Transition"],
+      "roles": ["Labor Specialist", "Water Resources Lead", "Energy Specialist"],
+      "taskTopics": ["Jobs Diagnostic TOR", "Water Sector TOR"],
+      "collections": ["MENA Jobs Diagnostic", "Water Scarcity Atlas", "Energy Subsidy Reform"],
+      "agents": ["Sherlock", "Lessons Explorer", "Translate"],
+      "taskAgent": "TOR Genie",
+      "vpu": "MNAVP"
+    },
+    "sar": {
+      "topSector": "Air Quality",
+      "topics": ["Air Quality", "Labor Markets", "Digital Inclusion"],
+      "roles": ["Air Quality Lead", "Labor Economist", "Digital Specialist"],
+      "taskTopics": ["Air Quality TOR", "Digital Inclusion Synthesis"],
+      "collections": ["South Asia Air Quality", "SAR Jobs Diagnostic", "Digital Inclusion Studies"],
+      "agents": ["Sherlock", "Lessons Explorer", "Translate"],
+      "taskAgent": "TOR Genie",
+      "vpu": "SARVP"
+    },
+    "oth": {
+      "topSector": "—",
+      "topics": [],
+      "roles": [],
+      "taskTopics": [],
+      "collections": [],
+      "agents": ["—", "—", "—"],
+      "taskAgent": "—",
+      "vpu": "—"
+    }
+  },
+
+  "isoToIncome": {
+    "af": "Low Income", "bf": "Low Income", "bi": "Low Income", "cf": "Low Income",
+    "td": "Low Income", "cd": "Low Income", "er": "Low Income", "et": "Low Income",
+    "gm": "Low Income", "gw": "Low Income", "lr": "Low Income", "mg": "Low Income",
+    "ml": "Low Income", "mz": "Low Income", "ne": "Low Income", "rw": "Low Income",
+    "sl": "Low Income", "so": "Low Income", "ss": "Low Income", "sd": "Low Income",
+    "sy": "Low Income", "tg": "Low Income", "ug": "Low Income", "ye": "Low Income",
+    "ar": "Upper Middle Income", "br": "Upper Middle Income", "cn": "Upper Middle Income",
+    "co": "Upper Middle Income", "cr": "Upper Middle Income", "do": "Upper Middle Income",
+    "ec": "Upper Middle Income", "gd": "Upper Middle Income", "id": "Upper Middle Income",
+    "iq": "Upper Middle Income", "jm": "Upper Middle Income", "jo": "Upper Middle Income",
+    "kz": "Upper Middle Income", "lb": "Upper Middle Income", "ly": "Upper Middle Income",
+    "my": "Upper Middle Income", "mu": "Upper Middle Income", "mx": "Upper Middle Income",
+    "me": "Upper Middle Income", "na": "Upper Middle Income", "pe": "Upper Middle Income",
+    "py": "Upper Middle Income", "rs": "Upper Middle Income", "za": "Upper Middle Income",
+    "th": "Upper Middle Income", "tr": "Upper Middle Income", "tn": "Upper Middle Income",
+    "tm": "Upper Middle Income", "xk": "Upper Middle Income",
+    "us": "High Income", "ca": "High Income", "gb": "High Income", "fr": "High Income",
+    "de": "High Income", "it": "High Income", "es": "High Income", "jp": "High Income",
+    "kr": "High Income", "au": "High Income", "nz": "High Income", "sg": "High Income",
+    "ae": "High Income", "sa": "High Income", "il": "High Income", "cl": "High Income",
+    "uy": "High Income"
+  },
+
+  "isoToUsage": {
+    "ke": 98, "et": 76, "tz": 72, "ug": 68, "rw": 62, "mw": 54, "mz": 58, "zm": 56, "zw": 48,
+    "za": 82, "mg": 44, "ao": 52, "bw": 38, "na": 36, "ls": 30, "sz": 28, "sc": 18, "mu": 22,
+    "bi": 40, "km": 16, "ss": 50, "sd": 60, "so": 42,
+    "ng": 88, "gh": 70, "sn": 58, "ci": 64, "ml": 50, "bf": 48, "ne": 44, "bj": 42, "tg": 38,
+    "cm": 56, "cd": 60, "cg": 36, "gn": 34, "lr": 32, "sl": 30, "mr": 28, "gm": 26, "gw": 24,
+    "cv": 20, "gq": 18, "ga": 30, "td": 40, "cf": 34, "st": 14,
+    "in": 90, "bd": 74, "pk": 70, "np": 56, "lk": 52, "af": 60, "bt": 28, "mv": 22,
+    "br": 80, "mx": 76, "co": 66, "pe": 60, "ar": 58, "cl": 54, "ec": 50, "bo": 46, "py": 38,
+    "uy": 32, "ve": 42, "ht": 56, "do": 40, "jm": 34, "gt": 48, "hn": 44, "ni": 38, "sv": 36,
+    "cr": 30, "pa": 32, "sr": 24, "gy": 26, "tt": 22, "cu": 28,
+    "id": 78, "ph": 64, "vn": 62, "mm": 58, "kh": 50, "la": 42, "mn": 40, "pg": 44, "tl": 30,
+    "fj": 24, "sb": 22, "vu": 20, "ws": 16,
+    "eg": 72, "ma": 66, "tn": 52, "dz": 56, "ly": 38, "jo": 50, "lb": 42, "ye": 60, "ir": 46,
+    "iq": 54, "sy": 48, "ps": 38,
+    "ua": 60, "uz": 52, "tj": 44, "kg": 40, "kz": 48, "am": 30, "ge": 34, "az": 32, "md": 28,
+    "by": 22, "al": 26, "ba": 28, "mk": 24, "rs": 30, "me": 18, "xk": 20, "tm": 18, "tr": 50,
+    "ro": 32, "bg": 28, "pl": 24,
+    "us": 8, "ca": 6, "gb": 8, "fr": 8, "de": 8, "it": 6, "es": 6, "pt": 4, "nl": 4, "be": 4,
+    "ch": 4, "at": 4, "ie": 4, "se": 4, "no": 4, "fi": 4, "dk": 4, "jp": 8, "kr": 6, "au": 6,
+    "nz": 4, "sg": 6, "hk": 4, "tw": 4, "ru": 16
+  },
+
+  "isoToRegion": {
+    "ao": "afe", "bw": "afe", "bi": "afe", "km": "afe", "cd": "afe", "er": "afe", "sz": "afe",
+    "et": "afe", "ke": "afe", "ls": "afe", "mg": "afe", "mw": "afe", "mu": "afe", "mz": "afe",
+    "na": "afe", "rw": "afe", "sc": "afe", "so": "afe", "za": "afe", "ss": "afe", "sd": "afe",
+    "tz": "afe", "ug": "afe", "zm": "afe", "zw": "afe",
+    "bj": "afw", "bf": "afw", "cv": "afw", "cm": "afw", "cf": "afw", "td": "afw", "cg": "afw",
+    "ci": "afw", "gq": "afw", "ga": "afw", "gm": "afw", "gh": "afw", "gn": "afw", "gw": "afw",
+    "lr": "afw", "ml": "afw", "mr": "afw", "ne": "afw", "ng": "afw", "st": "afw", "sn": "afw",
+    "sl": "afw", "tg": "afw",
+    "kh": "eap", "cn": "eap", "fj": "eap", "id": "eap", "la": "eap", "my": "eap", "mn": "eap",
+    "mm": "eap", "pg": "eap", "ph": "eap", "th": "eap", "tl": "eap", "vn": "eap",
+    "ki": "eap", "mh": "eap", "fm": "eap", "nr": "eap", "pw": "eap", "sb": "eap", "to": "eap",
+    "tv": "eap", "vu": "eap", "ws": "eap",
+    "al": "eca", "am": "eca", "az": "eca", "by": "eca", "ba": "eca", "ge": "eca", "kz": "eca",
+    "xk": "eca", "kg": "eca", "md": "eca", "me": "eca", "mk": "eca", "pl": "eca", "ro": "eca",
+    "rs": "eca", "tj": "eca", "tr": "eca", "tm": "eca", "ua": "eca", "uz": "eca",
+    "ar": "lac", "bo": "lac", "br": "lac", "cl": "lac", "co": "lac", "cr": "lac", "do": "lac",
+    "ec": "lac", "sv": "lac", "gt": "lac", "gy": "lac", "ht": "lac", "hn": "lac", "jm": "lac",
+    "mx": "lac", "ni": "lac", "pa": "lac", "py": "lac", "pe": "lac", "uy": "lac", "ve": "lac",
+    "ag": "lac", "bs": "lac", "bb": "lac", "bz": "lac", "cu": "lac", "dm": "lac", "gd": "lac",
+    "kn": "lac", "lc": "lac", "vc": "lac", "sr": "lac", "tt": "lac",
+    "dz": "mna", "dj": "mna", "eg": "mna", "ir": "mna", "iq": "mna", "jo": "mna", "lb": "mna",
+    "ly": "mna", "ma": "mna", "sy": "mna", "tn": "mna", "ps": "mna", "ye": "mna",
+    "af": "sar", "bd": "sar", "bt": "sar", "in": "sar", "mv": "sar", "np": "sar", "pk": "sar",
+    "lk": "sar"
+  },
+
+  "countryNames": {
+    "dz": "Algeria", "ao": "Angola", "bj": "Benin", "bw": "Botswana", "bf": "Burkina Faso",
+    "bi": "Burundi", "cv": "Cabo Verde", "cm": "Cameroon", "cf": "C.A.R.", "td": "Chad",
+    "km": "Comoros", "cg": "Congo", "cd": "DR Congo", "ci": "Côte d'Ivoire", "dj": "Djibouti",
+    "eg": "Egypt", "gq": "Eq. Guinea", "er": "Eritrea", "sz": "Eswatini", "et": "Ethiopia",
+    "ga": "Gabon", "gm": "Gambia", "gh": "Ghana", "gn": "Guinea", "gw": "Guinea-Bissau",
+    "ke": "Kenya", "ls": "Lesotho", "lr": "Liberia", "ly": "Libya", "mg": "Madagascar",
+    "mw": "Malawi", "ml": "Mali", "mr": "Mauritania", "mu": "Mauritius", "ma": "Morocco",
+    "mz": "Mozambique", "na": "Namibia", "ne": "Niger", "ng": "Nigeria", "rw": "Rwanda",
+    "st": "São Tomé", "sn": "Senegal", "sc": "Seychelles", "sl": "Sierra Leone",
+    "so": "Somalia", "za": "South Africa", "ss": "South Sudan", "sd": "Sudan",
+    "tz": "Tanzania", "tg": "Togo", "tn": "Tunisia", "ug": "Uganda", "zm": "Zambia",
+    "zw": "Zimbabwe",
+    "ag": "Antigua", "ar": "Argentina", "bs": "Bahamas", "bb": "Barbados", "bz": "Belize",
+    "bo": "Bolivia", "br": "Brazil", "ca": "Canada", "cl": "Chile", "co": "Colombia",
+    "cr": "Costa Rica", "cu": "Cuba", "dm": "Dominica", "do": "Dom. Rep.",
+    "ec": "Ecuador", "sv": "El Salvador", "gd": "Grenada", "gt": "Guatemala",
+    "gy": "Guyana", "ht": "Haiti", "hn": "Honduras", "jm": "Jamaica", "mx": "Mexico",
+    "ni": "Nicaragua", "pa": "Panama", "py": "Paraguay", "pe": "Peru",
+    "kn": "St. Kitts", "lc": "St. Lucia", "vc": "St. Vincent", "sr": "Suriname",
+    "tt": "Trinidad", "us": "United States", "uy": "Uruguay", "ve": "Venezuela",
+    "al": "Albania", "ad": "Andorra", "at": "Austria", "by": "Belarus", "be": "Belgium",
+    "ba": "Bosnia", "bg": "Bulgaria", "hr": "Croatia", "cy": "Cyprus", "cz": "Czechia",
+    "dk": "Denmark", "ee": "Estonia", "fi": "Finland", "fr": "France", "de": "Germany",
+    "gr": "Greece", "hu": "Hungary", "is": "Iceland", "ie": "Ireland", "it": "Italy",
+    "xk": "Kosovo", "lv": "Latvia", "li": "Liechtenstein", "lt": "Lithuania",
+    "lu": "Luxembourg", "mt": "Malta", "md": "Moldova", "mc": "Monaco",
+    "me": "Montenegro", "nl": "Netherlands", "mk": "N. Macedonia", "no": "Norway",
+    "pl": "Poland", "pt": "Portugal", "ro": "Romania", "ru": "Russia", "sm": "San Marino",
+    "rs": "Serbia", "sk": "Slovakia", "si": "Slovenia", "es": "Spain", "se": "Sweden",
+    "ch": "Switzerland", "ua": "Ukraine", "gb": "United Kingdom", "va": "Vatican",
+    "af": "Afghanistan", "am": "Armenia", "az": "Azerbaijan", "bh": "Bahrain",
+    "ge": "Georgia", "ir": "Iran", "iq": "Iraq", "il": "Israel", "jo": "Jordan",
+    "kz": "Kazakhstan", "kw": "Kuwait", "kg": "Kyrgyzstan", "lb": "Lebanon",
+    "om": "Oman", "ps": "Palestine", "qa": "Qatar", "sa": "Saudi Arabia",
+    "sy": "Syria", "tj": "Tajikistan", "tr": "Türkiye", "tm": "Turkmenistan",
+    "ae": "UAE", "uz": "Uzbekistan", "ye": "Yemen",
+    "bd": "Bangladesh", "bt": "Bhutan", "bn": "Brunei", "kh": "Cambodia", "cn": "China",
+    "in": "India", "id": "Indonesia", "jp": "Japan", "kp": "North Korea",
+    "kr": "South Korea", "la": "Laos", "my": "Malaysia", "mv": "Maldives", "mn": "Mongolia",
+    "mm": "Myanmar", "np": "Nepal", "pk": "Pakistan", "ph": "Philippines", "sg": "Singapore",
+    "lk": "Sri Lanka", "tw": "Taiwan", "th": "Thailand", "tl": "Timor-Leste",
+    "vn": "Vietnam",
+    "au": "Australia", "fj": "Fiji", "ki": "Kiribati", "mh": "Marshall Is.",
+    "fm": "Micronesia", "nr": "Nauru", "nz": "New Zealand", "pw": "Palau",
+    "pg": "Papua New Guinea", "ws": "Samoa", "sb": "Solomon Is.", "to": "Tonga",
+    "tv": "Tuvalu", "vu": "Vanuatu"
+  }
+}

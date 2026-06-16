@@ -1,0 +1,26 @@
+.shell {
+  --sidebar-w: 72px;
+  --ai-panel-w: 0px;
+  min-height: 100vh;
+}
+
+.shell.is-expanded {
+  --sidebar-w: 240px;
+}
+
+.shell.is-ai-open {
+  --ai-panel-w: 440px;
+}
+
+.content {
+  margin-left: var(--sidebar-w);
+  margin-right: var(--ai-panel-w);
+  padding: 0 32px 16px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  background: #FAFBFC;
+  color: var(--color-neutral-solid-80);
+  transition: margin-left 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              margin-right 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -1,0 +1,85 @@
+<article class="card categories-card">
+  <header class="categories-head">
+    <h3 class="card-title">Prompt Intent Categories</h3>
+    <div class="tm-mode-toggle" role="group" aria-label="Treemap mode">
+      <button
+        type="button"
+        class="tm-mode-btn"
+        [class.is-active]="tmMode() === 'volume'"
+        (click)="setTmMode('volume')"
+      >By Volume</button>
+      <button
+        type="button"
+        class="tm-mode-btn"
+        [class.is-active]="tmMode() === 'repeat'"
+        (click)="setTmMode('repeat')"
+      >By Repeat Rate</button>
+    </div>
+  </header>
+
+  <div class="kpt-tabs">
+    @for (tab of kptTabDefs(); track tab.id) {
+      <button
+        type="button"
+        class="kpt-tab"
+        [class.is-active]="activeTab() === tab.id"
+        (click)="activeTab.set(tab.id)"
+      >{{ tab.label }}</button>
+    }
+  </div>
+
+  <div class="treemap">
+    @for (row of activeTreemap(); track $index; let rowIdx = $index) {
+      <div class="treemap-row" [style.flex]="rowFlex(row)">
+        @for (t of row; track t.id) {
+          <a
+            class="treemap-cell"
+            [class.is-trending]="t.trending"
+            [class.is-hovered]="hoveredTopic()?.id === t.id"
+            [style.flex]="t.pct"
+            [style.background]="t.color"
+            [routerLink]="['/prompts/analysis']"
+            [queryParams]="{ kpt: activeTab(), topic: t.id }"
+            (mouseenter)="hoveredTopic.set(t)"
+            (mouseleave)="hoveredTopic.set(null)"
+          >
+            <div class="cell-head">
+              <div class="cell-name">{{ t.name }}</div>
+              @if (t.trending) {
+                <span class="cell-trending">
+                  <tabler-icon icon="trending-up" [size]="12" />
+                  Emerging
+                </span>
+              }
+            </div>
+            <div class="cell-meta">
+              <span class="cell-pct">{{ t.pct }}%</span>
+              <span class="cell-dot">·</span>
+              <span class="cell-count">{{ t.count }} prompts</span>
+            </div>
+
+            @if (hoveredTopic()?.id === t.id && t.prompts?.length) {
+              <div class="topic-tooltip" [attr.data-row]="rowIdx">
+                <div class="tip-head">
+                  <span class="tip-dot" [style.background]="t.color"></span>
+                  <span class="tip-name">{{ t.name }}</span>
+                </div>
+                <div class="tip-meta">
+                  <span>{{ t.count }} prompts</span>
+                  <span class="dot-sep">·</span>
+                  <span>{{ t.pct }}% share</span>
+                </div>
+                <div class="tip-section">Top 3 example prompts</div>
+                <ul class="tip-prompts">
+                  @for (p of t.prompts; track p) {
+                    <li>{{ p }}</li>
+                  }
+                </ul>
+              </div>
+            }
+          </a>
+        }
+      </div>
+    }
+  </div>
+</article>

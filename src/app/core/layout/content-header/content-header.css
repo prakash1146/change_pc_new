@@ -1,0 +1,79 @@
+/* ============= Sticky top bar ============= */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  background: rgba(250, 251, 252, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 88px;
+  /* Bleed to cancel .content horizontal padding so the border runs full-width */
+  margin: 0 -32px;
+  padding: 0 32px;
+}
+
+.topbar-greeting {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-neutral-solid-90);
+  white-space: nowrap;
+}
+
+.topbar-greeting-name {
+  color: var(--color-primary-70);
+  margin-left: 4px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* ---- Workspace toggle pill ---- */
+.workspace-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-neutral-solid-05);
+  border: 1px solid var(--color-neutral-solid-15);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.workspace-btn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--color-neutral-solid-60);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.workspace-btn.is-active {
+  background: var(--color-primary-70);
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(44, 138, 255, 0.25);
+}
+
+.topbar.is-scrolled {
+  border-bottom-color: var(--color-neutral-solid-10);
+}
+
+.workspace-btn:not(.is-active):hover {
+  background: var(--color-neutral-solid-10);
+  color: var(--color-neutral-solid-90);
+}

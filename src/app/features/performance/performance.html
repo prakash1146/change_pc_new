@@ -1,0 +1,75 @@
+<header class="section-head">
+  <span class="section-head-row">
+    <span class="section-icon">
+      <img src="assets/icons/performance.svg" alt="" />
+    </span>
+    <span class="section-title">Performance</span>
+  </span>
+  <span class="section-rule"></span>
+</header>
+
+<section class="kpi-grid kpi-grid--2">
+  @for (k of kpis(); track k.title) {
+    <article class="kpi-card">
+      <h3 class="kpi-card-title">{{ k.title }}</h3>
+      <div class="kpi-metrics">
+        <div class="kpi-metric">
+          <span class="kpi-metric-value">{{ k.value }}</span>
+          @if (k.delta) {
+            <span class="kpi-metric-delta" [class]="deltaClass(k)">{{ k.delta }}</span>
+          }
+        </div>
+      </div>
+      @if (k.sub) {
+        <p class="kpi-card-sub">{{ k.sub }}</p>
+      }
+    </article>
+  }
+</section>
+
+<article class="perf-categories-card">
+  <header class="perf-categories-head">
+    <h3 class="perf-card-title">No Answer Prompt Categories</h3>
+  </header>
+
+  <div class="perf-kpt-tabs">
+    @for (tab of kptTabDefs(); track tab.id) {
+      <button
+        type="button"
+        class="perf-kpt-tab"
+        [class.is-active]="activeTab() === tab.id"
+        (click)="activeTab.set(tab.id)"
+      >{{ tab.label }}</button>
+    }
+  </div>
+
+  <div class="perf-treemap">
+    @for (row of activeTreemap(); track $index) {
+      <div class="perf-treemap-row" [style.flex]="rowFlex(row)">
+        @for (t of row; track t.id) {
+          <div
+            class="perf-treemap-cell"
+            [style.flex]="t.pct"
+            [style.background]="t.color"
+            [routerLink]="['/prompts/analysis']"
+            [queryParams]="{ kpt: activeTab(), topic: t.topicId }"
+          >
+            <div class="perf-cell-head">
+              <div class="perf-cell-name">{{ t.name }}</div>
+              @if (t.trending) {
+                <span class="perf-cell-trending">
+                  <tabler-icon icon="trending-up" [size]="12" />
+                  Emerging
+                </span>
+              }
+            </div>
+            <div class="perf-cell-meta">
+              <span class="perf-cell-pct">{{ t.pct }}%</span>
+              <span class="perf-cell-count">{{ t.count }} prompts</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</article>

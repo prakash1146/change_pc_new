@@ -1,0 +1,115 @@
+<!-- Floating Ask AI button -->
+<button
+  class="ai-fab"
+  type="button"
+  [class.is-hidden]="aiOpen()"
+  (click)="openAi()"
+  aria-label="Ask AI"
+>
+  <tabler-icon icon="sparkles" [size]="24" />
+</button>
+
+<!-- Ask AI side panel — inline, content shrinks responsively -->
+@if (aiOpen()) {
+  <aside class="ai-panel" role="complementary" aria-label="Ask AI">
+    <header class="ai-head">
+      <div class="ai-head-title">
+        <span class="ai-orb"></span>
+        <span>Ask AI</span>
+      </div>
+      <button class="ai-head-close" (click)="closeAi()" aria-label="Close">
+        <tabler-icon icon="x" [size]="18" />
+      </button>
+    </header>
+
+    <div class="ai-conversation">
+      @if (aiMessages().length === 0) {
+        <div class="ai-empty">
+          <span class="ai-empty-orb">
+            <tabler-icon icon="sparkles" [size]="22" />
+          </span>
+          <p class="ai-empty-title">Ask anything</p>
+          <p class="ai-empty-sub">Get answers grounded in your K360 metrics</p>
+          <div class="ai-suggestions">
+            @for (s of aiSuggestions; track s) {
+              <button
+                type="button"
+                class="ai-suggestion"
+                (click)="useSuggestion(s)"
+              >
+                <tabler-icon icon="sparkles" [size]="12" />
+                <span>{{ s }}</span>
+              </button>
+            }
+          </div>
+        </div>
+      } @else {
+        @for (msg of aiMessages(); track $index) {
+          @if (msg.role === 'user') {
+            <div class="ai-msg user-msg">
+              <div class="user-bubble">{{ msg.text }}</div>
+              <div class="user-avatar">NT</div>
+            </div>
+          } @else {
+            <div class="ai-msg assistant-msg">
+              <div class="assistant-avatar">
+                <span class="ai-orb small"></span>
+              </div>
+              <div class="assistant-body">
+                @for (sec of msg.sections; track $index) {
+                  @if (sec.type === 'p') {
+                    <p>{{ sec.text }}</p>
+                  } @else {
+                    <ul>
+                      @for (item of sec.items; track item) {
+                        <li>{{ item }}</li>
+                      }
+                    </ul>
+                  }
+                }
+                @if (msg.sourcesCount) {
+                  <a class="ai-sources">
+                    Used {{ msg.sourcesCount }} sources
+                    <tabler-icon icon="chevron-down" [size]="12" />
+                  </a>
+                }
+                <div class="ai-msg-actions">
+                  <button type="button" aria-label="Copy">
+                    <tabler-icon icon="copy" [size]="14" />
+                  </button>
+                  <button type="button" aria-label="Thumbs up">
+                    <tabler-icon icon="thumb-up" [size]="14" />
+                  </button>
+                  <button type="button" aria-label="Thumbs down">
+                    <tabler-icon icon="thumb-down" [size]="14" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      }
+    </div>
+
+    <form class="ai-input-bar" (submit)="$event.preventDefault(); sendMessage()">
+      <input
+        type="text"
+        placeholder="Ask me anything..."
+        [value]="aiInput()"
+        [disabled]="aiBusy()"
+        (input)="setAiInput($any($event.target).value)"
+      />
+      <button type="button" class="ai-attach" aria-label="Attach">
+        <tabler-icon icon="paperclip" [size]="16" />
+      </button>
+      <button
+        type="submit"
+        class="ai-send"
+        aria-label="Send"
+        [disabled]="!aiInput().trim() || aiBusy()"
+      >
+        <tabler-icon icon="arrow-up" [size]="16" />
+      </button>
+    </form>
+  </aside>
+}

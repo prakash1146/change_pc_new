@@ -1,0 +1,16 @@
+<div class="shell" [class.is-expanded]="expanded()" [class.is-ai-open]="aiOpen()">
+  <!-- ===== Section 1: Sidebar ===== -->
+  <wbct-sidebar [expanded]="expanded()" (toggleExpanded)="toggleSidebar()" />
+
+  <!-- ===== Section 2: Middle content ===== -->
+  <main class="content">
+    @if (isLandingPage()) {
+      <wbct-content-header />
+    }
+
+    <router-outlet />
+  </main>
+
+  <!-- ===== Section 3: Ask AI panel ===== -->
+  <wbct-ai-panel />
+</div>

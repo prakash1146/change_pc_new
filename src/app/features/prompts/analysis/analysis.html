@@ -1,0 +1,353 @@
+@if (category(); as c) {
+  <header class="page-header">
+    <div class="page-header-title">
+      <a class="back-link" routerLink="/prompts">
+        <tabler-icon icon="chevron-left" [size]="14" />
+        Back to Prompts Overview
+      </a>
+      <h1 class="title">{{ c.name }}</h1>
+      <p class="page-subtitle">
+        <span class="subtitle-key">Topic Category:</span>
+        <span class="subtitle-val">{{ domainLabel(c.domain) }}</span>
+        <span class="subtitle-sep" aria-hidden="true">·</span>
+        <span class="subtitle-key">Updated:</span>
+        <span class="subtitle-val">{{ c.updatedAgo }}</span>
+      </p>
+    </div>
+
+    <!-- <div class="analysis-filter-bar">
+      <wbct-hier-filter
+        placeholder="Select Region/Country"
+        [groups]="regionGroups"
+        [initialSelected]="initialRegionCountry"
+        (selectionChange)="currentRegionCountry.set($event)"
+      />
+      <wbct-date-range-filter />
+    </div> -->
+  </header>
+
+  <!-- Row 1: 4 KPI cards -->
+  <section class="kpi-grid kpi-grid--4 analysis-kpi-row">
+    <article class="kpi-card">
+      <h3 class="kpi-card-title">{{ c.primaryTitle }}</h3>
+      <div class="kpi-metrics">
+        <div class="kpi-metric">
+          <span class="kpi-metric-value">{{ c.primaryCount }}</span>
+          <span class="kpi-metric-delta">+{{ c.primaryDeltaPct }}%</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- <article class="kpi-card">
+      <h3 class="kpi-card-title">Total Received Feedback</h3>
+      <div class="kpi-metrics">
+        <div class="kpi-metric">
+          <span class="kpi-metric-value">{{ c.totalFeedback }}</span>
+        </div>
+      </div>
+      <div class="feedback-split">
+        <span class="feedback-split-item feedback-split-item--up">
+          <tabler-icon icon="thumb-up" [size]="16" />
+          <span class="feedback-split-pct">{{ c.positivePct }}%</span>
+          <span class="feedback-split-label">positive</span>
+        </span>
+        <span class="feedback-split-sep" aria-hidden="true">|</span>
+        <span class="feedback-split-item feedback-split-item--down">
+          <tabler-icon icon="thumb-down" [size]="16" />
+          <span class="feedback-split-pct">{{ c.negativePct }}%</span>
+          <span class="feedback-split-label">negative</span>
+        </span>
+      </div>
+    </article> -->
+
+    <article class="kpi-card">
+      <h3 class="kpi-card-title">{{ c.conversionTitle }}</h3>
+      <div class="kpi-metrics">
+        <div class="kpi-metric">
+          <span class="kpi-metric-value">{{ c.conversionPct }}%</span>
+          <span class="kpi-metric-delta">{{ c.conversionDeltaPct >= 0 ? '+' : '' }}{{ c.conversionDeltaPct }}% vs last month</span>
+        </div>
+      </div>
+      <p class="kpi-card-sub">{{ c.conversionCompare }}</p>
+      @if (c.downloadBreakdown?.length) {
+        <hr class="kpi-card-rule" />
+        <div class="dl-breakdown">
+          @for (d of c.downloadBreakdown!; track d.label) {
+            <div class="dl-item">
+              <span class="dl-count">{{ d.count }}</span>
+              <span class="dl-label">{{ d.label }}</span>
+            </div>
+          }
+        </div>
+      }
+    </article>
+
+    <article class="kpi-card">
+      <h3 class="kpi-card-title">{{ c.repeatTitle }}</h3>
+      <div class="kpi-metrics">
+        <div class="kpi-metric">
+          <span class="kpi-metric-value">{{ c.repeatPct }}%</span>
+          <span class="kpi-metric-delta">{{ c.repeatDeltaPct >= 0 ? '+' : '' }}{{ c.repeatDeltaPct }}% vs last month</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Row 4: Prompt Subcategories table -->
+  <section class="analysis-subcat-section">
+    <article class="card">
+      <h3 class="card-title">Prompt Subcategories</h3>
+      <div class="subcat-table-wrap">
+        <table class="subcat-table">
+          <thead>
+            <tr>
+              <th>
+                <span class="th-cell">
+                  Name
+                  <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                </span>
+              </th>
+              <th class="num-col">
+                <span class="th-cell">
+                  {{ c.subcatCountLabel }}
+                  <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                </span>
+              </th>
+              <th class="num-col">
+                <span class="th-cell">
+                  {{ c.subcatRepeatLabel }}
+                  <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                </span>
+              </th>
+              <th class="num-col">
+                <span class="th-cell">
+                  {{ c.subcatConversionLabel }}
+                  <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                </span>
+              </th>
+              <th class="num-col">
+                <span class="th-cell">
+                  Negative Feedback
+                  <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                </span>
+              </th>
+              <th class="num-col">
+                <span class="th-cell">
+                  Positive Feedback
+                  <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (s of c.subcategories; track s.name) {
+              <tr>
+                <td><a class="link-cell" (click)="openSubcatDrawer(s)">{{ s.name }}</a></td>
+                <td class="num-col"><span class="link-cell">{{ s.queries }}</span></td>
+                <td class="num-col"><span class="link-cell">{{ s.repeatRate }}%</span></td>
+                <td class="num-col"><span class="link-cell">{{ s.retrievalSuccess }}%</span></td>
+                <td class="num-col">
+                  <span class="subcat-feedback subcat-feedback--neg">
+                    <tabler-icon icon="thumb-down" [size]="14" />
+                    {{ s.negativePct }}%
+                  </span>
+                </td>
+                <td class="num-col">
+                  <span class="subcat-feedback subcat-feedback--pos">
+                    <tabler-icon icon="thumb-up" [size]="14" />
+                    {{ s.positivePct }}%
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </section>
+}
+
+<!-- ============ Subcategory drawer ============ -->
+@if (subDrawerOpen()) {
+  <div class="sub-backdrop" (click)="closeSubcatDrawer()"></div>
+}
+
+<aside
+  class="sub-drawer"
+  [class.is-open]="subDrawerOpen()"
+  [attr.aria-hidden]="!subDrawerOpen()"
+  aria-label="Subcategory detail"
+>
+  @if (subDrawerData(); as d) {
+    <!-- VIEW 1: subcategory overview + prompts list -->
+    @if (subDrawerView() === 'subcat') {
+      <header class="sub-head">
+        <h2 class="sub-title">{{ d.name }}</h2>
+        <button class="sub-close" type="button" (click)="closeSubcatDrawer()" aria-label="Close">
+          <tabler-icon icon="x" [size]="18" />
+        </button>
+      </header>
+
+      <div class="sub-body">
+        <!-- AI Insights -->
+        <section class="sub-insight-card">
+          <header class="sub-insight-head">
+            <span class="sub-insight-icon">
+              <tabler-icon icon="sparkles" [size]="16" />
+            </span>
+            <h3 class="sub-insight-title">AI Insights</h3>
+          </header>
+
+          <p class="sub-insight-text" [innerHTML]="subDrawerAiInsight()"></p>
+
+          <!-- Hidden: Top VPUs by Engagement + Top Collections.
+               Wrap content in @if(false) so it's easy to re-enable later. -->
+          @if (false) {
+            <div class="sub-insight-grid">
+              <div class="sub-insight-block">
+                <h4 class="sub-insight-block-title">Top VPUs by Engagement</h4>
+                <ul class="sub-insight-list">
+                  @for (v of d.topVpus; track v) {
+                    <li>{{ v }}</li>
+                  }
+                </ul>
+              </div>
+
+              <div class="sub-insight-block">
+                <h4 class="sub-insight-block-title">Top Collections</h4>
+                <ul class="sub-insight-list">
+                  @for (c of d.topCollections; track c) {
+                    <li><a class="link-cell" [routerLink]="['/assets/collection', slugFor(c)]">{{ c }}</a></li>
+                  }
+                </ul>
+              </div>
+            </div>
+          }
+        </section>
+
+        <!-- Prompts in the category -->
+        <section class="sub-section">
+          <h3 class="sub-section-title">Types of Prompts in the Category</h3>
+          <div class="sub-table-wrap">
+            <table class="sub-table">
+              <thead>
+                <tr>
+                  <th>
+                    <span class="th-cell">
+                      Name
+                      <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                    </span>
+                  </th>
+                  <th class="num-col">
+                    <span class="th-cell">
+                      No. of Queries
+                      <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                    </span>
+                  </th>
+                  <th class="num-col">
+                    <span class="th-cell">
+                      Negative Feedback
+                      <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                    </span>
+                  </th>
+                  <th class="num-col">
+                    <span class="th-cell">
+                      Positive Feedback
+                      <tabler-icon class="th-sort" icon="arrow-down" [size]="12" />
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (p of d.prompts; track p.query) {
+                  <tr class="sub-prompt-row" (click)="openSubcatPromptDetail(p)">
+                    <td><span class="link-cell sub-prompt-query">{{ p.query }}</span></td>
+                    <td class="num-col"><span class="link-cell">{{ p.queries }}</span></td>
+                    <td class="num-col">
+                      <span class="subcat-feedback subcat-feedback--neg">
+                        <tabler-icon icon="thumb-down" [size]="14" />
+                        {{ p.negativePct }}%
+                      </span>
+                    </td>
+                    <td class="num-col">
+                      <span class="subcat-feedback subcat-feedback--pos">
+                        <tabler-icon icon="thumb-up" [size]="14" />
+                        {{ p.positivePct }}%
+                      </span>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    }
+
+    <!-- VIEW 2: aggregated feedback for this prompt type (back arrow returns to view 1) -->
+    @if (subDrawerView() === 'prompt' && subDrawerPrompt(); as p) {
+      <header class="sub-head sub-head--prompt">
+        <button class="sub-back" type="button" (click)="backToSubcat()" aria-label="Back">
+          <tabler-icon icon="arrow-left" [size]="18" />
+        </button>
+        <h2 class="sub-title sub-title--prompt">{{ p.query }}</h2>
+      </header>
+
+      <div class="sub-body">
+        <!-- Aggregate summary: total feedback + positive + negative -->
+        <div class="sub-fb-summary">
+          <div class="sub-fb-summary-item">
+            <div class="sub-fb-summary-value">{{ p.positiveCount + p.negativeCount }}</div>
+            <div class="sub-fb-summary-label">Total Feedback</div>
+          </div>
+          <div class="sub-fb-summary-item">
+            <div class="sub-fb-summary-value sub-fb-summary-value--pos">{{ p.positiveCount }}</div>
+            <div class="sub-fb-summary-label sub-fb-summary-label--pos">
+              <tabler-icon icon="thumb-up" [size]="16" /> Positive Feedback
+            </div>
+          </div>
+          <div class="sub-fb-summary-item">
+            <div class="sub-fb-summary-value sub-fb-summary-value--neg">{{ p.negativeCount }}</div>
+            <div class="sub-fb-summary-label sub-fb-summary-label--neg">
+              <tabler-icon icon="thumb-down" [size]="16" /> Negative Feedback
+            </div>
+          </div>
+        </div>
+
+        <!-- Negative feedback breakdown by reason -->
+        <section class="sub-section">
+          <h3 class="sub-section-title">Negative Feedback Reasons</h3>
+          <ul class="sub-neg-list">
+            @for (r of p.negativeBreakdown; track r.label; let i = $index) {
+              <li class="sub-neg-item">
+                <div class="sub-neg-row">
+                  <span class="sub-neg-index">{{ i + 1 }}</span>
+                  <span class="sub-neg-label">{{ r.label }}</span>
+                  <span class="sub-neg-count">{{ r.count }}</span>
+                </div>
+                <div class="sub-neg-bar">
+                  <div
+                    class="sub-neg-bar-fill"
+                    [style.width.%]="p.negativeCount > 0 ? (r.count / p.negativeCount) * 100 : 0"
+                  ></div>
+                </div>
+              </li>
+            }
+          </ul>
+        </section>
+
+        <!-- Free-text comments captured when users picked "Other" -->
+        @if (p.otherComments.length) {
+          <section class="sub-section">
+            <h3 class="sub-section-title">Additional Comments from Other</h3>
+            <ul class="sub-neg-comments">
+              @for (c of p.otherComments; track c) {
+                <li>{{ c }}</li>
+              }
+            </ul>
+          </section>
+        }
+      </div>
+    }
+  }
+</aside>

@@ -1,0 +1,86 @@
+<div class="hf-root" #rootEl>
+  <button
+    type="button"
+    class="hf-trigger"
+    [class.is-open]="open()"
+    [class.has-value]="selectedLeaves().size > 0"
+    (click)="toggleOpen()"
+  >
+    <tabler-icon icon="calendar-month" [size]="16" />
+    <span class="hf-trigger-label">{{ selectedDisplay() }}</span>
+    @if (selectedLeaves().size > 0) {
+      <span class="hf-trigger-chip">{{ selectedLeaves().size }}</span>
+    }
+    <tabler-icon icon="chevron-down" [size]="14" />
+  </button>
+
+  @if (open()) {
+    <div class="hf-panel" role="listbox" aria-multiselectable="true">
+      <div class="hf-search">
+        <tabler-icon icon="search" [size]="14" />
+        <input
+          type="text"
+          [value]="query()"
+          (input)="query.set($any($event.target).value)"
+          placeholder="Search…"
+          autocomplete="off"
+        />
+        @if (selectedLeaves().size > 0) {
+          <button type="button" class="hf-clear" (click)="clearAll()">Clear</button>
+        }
+      </div>
+
+      <div class="hf-list">
+        @for (g of filteredGroups(); track g.id) {
+          <div class="hf-group">
+            <button
+              type="button"
+              class="hf-row hf-row--group"
+              [attr.data-state]="groupState(g)"
+              (click)="toggleGroup(g)"
+            >
+              <span class="hf-check" [attr.data-state]="groupState(g)">
+                @if (groupState(g) === 'all') {
+                  <tabler-icon icon="check" [size]="11" />
+                } @else if (groupState(g) === 'some') {
+                  <span class="hf-check-dash"></span>
+                }
+              </span>
+              <span class="hf-row-label">{{ g.label }}</span>
+              <span class="hf-row-count">{{ g.children.length }}</span>
+              <button
+                type="button"
+                class="hf-expand"
+                [class.is-expanded]="isExpanded(g.id)"
+                (click)="toggleExpand(g.id, $event)"
+                [attr.aria-label]="isExpanded(g.id) ? 'Collapse' : 'Expand'"
+              >
+                <tabler-icon icon="chevron-down" [size]="13" />
+              </button>
+            </button>
+
+            @if (isExpanded(g.id) || query().length > 0) {
+              <div class="hf-children">
+                @for (c of g.children; track c.id) {
+                  <button
+                    type="button"
+                    class="hf-row hf-row--leaf"
+                    [class.is-selected]="isLeafSelected(c.id)"
+                    (click)="toggleLeaf(c.id)"
+                  >
+                    <span class="hf-check" [attr.data-state]="isLeafSelected(c.id) ? 'all' : 'none'">
+                      @if (isLeafSelected(c.id)) {
+                        <tabler-icon icon="check" [size]="11" />
+                      }
+                    </span>
+                    <span class="hf-row-label">{{ c.label }}</span>
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

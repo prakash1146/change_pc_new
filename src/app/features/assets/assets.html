@@ -1,0 +1,291 @@
+<header class="section-head">
+  <span class="section-head-row">
+    <span class="section-icon">
+      @if (mode() === 'collections') {
+        <img src="assets/icons/usage.svg" alt="" />
+      } @else {
+        <img src="assets/icons/tasks.svg" alt="" />
+      }
+    </span>
+    <span class="section-title">
+      @if (mode() === 'collections') { Collections } @else { Tasks }
+    </span>
+  </span>
+  <span class="section-rule"></span>
+</header>
+
+@if (mode() === 'collections') {
+  <!-- KPI cards — reuse the homepage .kpi-card / .kpi-grid components -->
+  <section class="kpi-grid kpi-grid--3">
+    @for (k of overviewKpis(); track k.title) {
+      <article class="kpi-card">
+        <h3 class="kpi-card-title">{{ k.title }}</h3>
+        <div class="kpi-metrics">
+          @for (m of k.metrics; track $index) {
+            <div class="kpi-metric">
+              <span class="kpi-metric-value">{{ m.value }}</span>
+              @if (m.label) { <span class="kpi-metric-label">{{ m.label }}</span> }
+              @if (m.delta) { <span class="kpi-metric-delta">{{ m.delta }}</span> }
+            </div>
+          }
+        </div>
+        @if (k.sub) {
+          <hr class="kpi-card-rule" />
+          <p class="kpi-card-sub">{{ k.sub }}</p>
+        }
+      </article>
+    }
+  </section>
+
+  <section class="registry-card">
+    <header class="registry-head">
+      <h2 class="registry-title">Collection Registry</h2>
+    </header>
+
+    <table class="registry-table">
+      <thead>
+        <tr>
+          @for (col of [
+            { key: 'name',        label: 'Name'  },
+            { key: 'status',      label: 'Curation Status'  },
+            { key: 'verticals',   label: 'Vertical(s)'         },
+            { key: 'sectors',     label: 'Sector(s)'        },
+            { key: 'lastUpdated', label: 'Last Updated'     },
+            { key: 'utilization', label: 'Retrieval Rate'   },
+            { key: 'queries',     label: 'Total Queries'    }
+          ]; track col.key) {
+            <th>
+              <button type="button" class="reg-sort-th" (click)="toggleRegSort($any(col.key))">
+                {{ col.label }}
+                <tabler-icon
+                  class="reg-sort-caret"
+                  [class.is-active]="regSortKey() === col.key"
+                  [icon]="regSortKey() === col.key && regSortDir() === 'asc' ? 'arrow-up' : 'arrow-down'"
+                  [size]="12"
+                />
+              </button>
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of sortedRegistry(); track r.name) {
+          <tr class="registry-row" [routerLink]="['/assets/collection', slugFor(r.name)]">
+            <td><a class="reg-cell-link" [routerLink]="['/assets/collection', slugFor(r.name)]">{{ r.name }}</a></td>
+            <td><span class="reg-cell-link">{{ r.status }}</span></td>
+            <td><span class="reg-cell-link">{{ r.verticals.join(', ') }}</span></td>
+             <td><span class="reg-cell-link">{{ r.sectors.join(', ') }}</span></td>
+            <td><span class="reg-cell-link">{{ r.lastUpdatedDisplay }}</span></td>
+            <td><span class="reg-cell-link">{{ r.utilization }}%</span></td>
+            <td><span class="reg-cell-link">{{ formatQueries(r.queries) }}</span></td>
+            <!-- <td>
+              <div class="usage-bar">
+                <div class="usage-bar-track">
+                  <div class="usage-bar-fill" [style.width.%]="r.utilization"></div>
+                </div>
+                <span class="usage-bar-pct">{{ r.utilization }}%</span>
+              </div>
+            </td>
+            <td><span class="reg-cell-link">{{ r.lastUpdatedDisplay }}</span></td> -->
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+}
+
+
+@if (mode() === 'agents') {
+<!-- Agents KPIs (homepage-style cards) -->
+<!-- <section class="kpi-grid kpi-grid--4">
+  @for (k of agentsKpis(); track k.title) {
+    <article class="kpi-card">
+      <h3 class="kpi-card-title">{{ k.title }}</h3>
+      <div class="kpi-metrics">
+        @for (m of k.metrics; track $index) {
+          <div class="kpi-metric">
+            <span class="kpi-metric-value">{{ m.value }}</span>
+            @if (m.label) { <span class="kpi-metric-label">{{ m.label }}</span> }
+            @if (m.delta) { <span class="kpi-metric-delta">{{ m.delta }}</span> }
+          </div>
+        }
+      </div>
+      @if (k.sub) {
+        <hr class="kpi-card-rule" />
+        <p class="kpi-card-sub">{{ k.sub }}</p>
+      }
+    </article>
+  }
+</section> -->
+
+<!-- Agents & Tasks: two side-by-side ranked lists (prompts + actions) -->
+<section class="agents-tasks-row">
+  <article class="kpi-card vpu-rank-card">
+    <h3 class="kpi-card-title">Tool Invocations</h3>
+    <ol class="vpu-rank-list">
+      @for (a of agentPromptUsage(); track a.name; let i = $index) {
+        <li class="vpu-rank-row vpu-rank-row--with-bar">
+          <span class="vpu-rank-num">{{ i + 1 }}</span>
+          <span class="vpu-rank-name">{{ a.name }}</span>
+          <span class="vpu-rank-bar">
+            <span class="vpu-rank-bar-track">
+              <span class="vpu-rank-bar-fill" [style.width.%]="(a.prompts / maxAgentPrompts()) * 100"></span>
+            </span>
+          </span>
+          <span class="vpu-rank-metric">{{ a.prompts }} <span class="vpu-rank-metric-unit">prompts</span></span>
+        </li>
+      }
+    </ol>
+  </article>
+
+  <article class="kpi-card vpu-rank-card">
+    <h3 class="kpi-card-title">Downloads</h3>
+    <ol class="vpu-rank-list">
+      @for (d of actionDownloads(); track d.label; let i = $index) {
+        <li class="vpu-rank-row vpu-rank-row--with-bar">
+          <span class="vpu-rank-num">{{ i + 1 }}</span>
+          <span class="vpu-rank-name">{{ d.label }}</span>
+          <span class="vpu-rank-bar">
+            <span class="vpu-rank-bar-track">
+              <span class="vpu-rank-bar-fill" [style.width.%]="(d.count / maxActionDownloads()) * 100"></span>
+            </span>
+          </span>
+          <span class="vpu-rank-metric">{{ d.count }} <span class="vpu-rank-metric-unit">files</span></span>
+        </li>
+      }
+    </ol>
+  </article>
+</section>
+}
+
+<!-- Collection Details drawer -->
+@if (collectionDrawerOpen() && collectionDetails(); as d) {
+  <div
+    class="drawer-backdrop"
+    (click)="closeCollectionDrawer()"
+    (keydown.escape)="closeCollectionDrawer()"
+  ></div>
+  <aside
+    class="cd-drawer"
+    role="dialog"
+    [class.is-expanded]="collectionDrawerExpanded()"
+    [class.is-resizing]="isCollectionResizing()"
+    [style.width.px]="collectionDrawerExpanded() ? null : collectionDrawerWidth()"
+    [attr.aria-label]="d.name + ' details'"
+  >
+    <div
+      class="drawer-resizer"
+      (mousedown)="onCollectionResizeStart($event)"
+      role="separator"
+      aria-label="Resize drawer"
+    >
+      <span class="resizer-grip"></span>
+    </div>
+
+    <header class="cd-head">
+      <h2 class="cd-head-title">Collection Details</h2>
+      <div class="cd-head-actions">
+        <button
+          type="button"
+          [attr.aria-label]="collectionDrawerExpanded() ? 'Collapse' : 'Expand'"
+          (click)="toggleCollectionDrawerExpand()"
+        >
+          <tabler-icon
+            [icon]="collectionDrawerExpanded() ? 'arrows-move' : 'maximize'"
+            [size]="18"
+          />
+        </button>
+        <button type="button" aria-label="Close" (click)="closeCollectionDrawer()">
+          <tabler-icon icon="x" [size]="18" />
+        </button>
+      </div>
+    </header>
+
+    <div class="cd-body">
+      <section class="cd-identity">
+        <span class="cd-identity-icon">
+          <tabler-icon [icon]="d.icon" [size]="22" />
+        </span>
+        <div class="cd-identity-text">
+          <h3 class="cd-name">{{ d.name }}</h3>
+          <p class="cd-id">ID: <span>{{ d.id }}</span></p>
+          <div class="cd-badges">
+            <span class="cd-risk-badge" [attr.data-risk]="d.risk">{{ riskLabel(d.risk) }}</span>
+            @for (s of d.sources; track s) {
+              <span class="cd-source-badge">{{ s }}</span>
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="cd-metric-grid">
+        <article class="cd-metric">
+          <span class="cd-metric-title">Total Files</span>
+          <span class="cd-metric-value">{{ d.totalFiles.toLocaleString() }}</span>
+        </article>
+        <article class="cd-metric">
+          <span class="cd-metric-title">Retrieval %</span>
+          <span class="cd-metric-value danger">
+            {{ d.retrievalPct }}%
+            <span class="cd-metric-sub">({{ d.retrievalCount }})</span>
+          </span>
+        </article>
+        <article class="cd-metric">
+          <span class="cd-metric-title">Average Citation Coverage</span>
+          <span class="cd-metric-value">{{ d.citationCoverage }}%</span>
+        </article>
+        <article class="cd-metric">
+          <span class="cd-metric-title">Prompt Dependency</span>
+          <span class="cd-metric-value">
+            {{ d.promptDependency }}%
+            <span class="cd-metric-sub">prompts rely on this collection</span>
+          </span>
+        </article>
+      </section>
+
+      <section class="cd-section">
+        <h4 class="cd-section-title">Top Prompt Types</h4>
+        <ul class="cd-prompt-list">
+          @for (p of d.topPromptTypes; track p.text) {
+            <li class="cd-prompt-row">
+              <span class="cd-prompt-text">&ldquo;{{ p.text }}&rdquo;</span>
+              <div class="cd-prompt-meta">
+                <span class="cd-prompt-freq">Freq: {{ p.freq }}</span>
+                <span class="cd-prompt-score">Score: {{ p.score.toFixed(2) }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="cd-section">
+        <h4 class="cd-section-title">Top Negative Feedback</h4>
+        <div class="cd-neg-tags">
+          @for (n of d.topNegative; track n.label) {
+            <span class="cd-neg-tag">
+              {{ n.label }}<span class="cd-neg-freq">Freq: {{ n.freq }}</span>
+            </span>
+          }
+        </div>
+      </section>
+
+      <section class="cd-section">
+        <h4 class="cd-section-title">Governance Actions</h4>
+        <ul class="cd-actions">
+          @for (a of d.governance; track a.label) {
+            <li>
+              <button
+                type="button"
+                class="cd-action"
+                [class.is-primary]="a.intent === 'primary'"
+              >
+                <span>{{ a.label }}</span>
+                <tabler-icon [icon]="a.icon" [size]="18" />
+              </button>
+            </li>
+          }
+        </ul>
+      </section>
+    </div>
+  </aside>
+}

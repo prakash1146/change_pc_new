@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "type":      "Strategic Toolkit",
+    "verticals": "Infrastructure, Finance",
+    "updated":   "2 hours ago",
+    "sectors":   "Water, Climate"
+  },
+
+  "kpis": [
+    {
+      "title": "Total Queries",
+      "metrics": [{ "value": "847", "delta": "+12%" }]
+    }
+  ],
+
+  "tabDefs": [
+    { "id": "knowledge", "label": "Knowledge" },
+    { "id": "people",    "label": "People" },
+    { "id": "tasks",     "label": "Tasks" }
+  ],
+
+  "categoriesByTab": {
+    "knowledge": [
+      { "label": "Flood Resilience Planning",                          "pct": 39, "prompts": 198 },
+      { "label": "Climate Adaptation & Resilience Strategies",         "pct": 24, "prompts": 122 },
+      { "label": "Water & Infrastructure Financing",                   "pct": 22, "prompts": 112 },
+      { "label": "Urban Resilience",                                   "pct":  9, "prompts":  46 },
+      { "label": "Disaster Preparedness",                              "pct":  6, "prompts":  30 }
+    ],
+    "people": [
+      { "label": "Water Resources Specialists",                        "pct": 48, "prompts": 100 },
+      { "label": "Climate Adaptation & Resilience Leads",              "pct": 28, "prompts":  59 },
+      { "label": "Hydrologists",                                       "pct": 12, "prompts":  25 },
+      { "label": "Urban Planners",                                     "pct":  7, "prompts":  15 },
+      { "label": "M&E Specialists",                                    "pct":  5, "prompts":  10 }
+    ],
+    "tasks": [
+      { "label": "TOR: Water Sector Diagnostic",                       "pct": 52, "prompts":  66 },
+      { "label": "Project Concept Notes",                              "pct": 22, "prompts":  28 },
+      { "label": "Synthesis: Drought Response",                        "pct": 14, "prompts":  18 },
+      { "label": "Briefs: Climate Adaptation & Resilience",            "pct":  7, "prompts":   9 },
+      { "label": "Slides: Resilience Outcomes",                        "pct":  5, "prompts":   6 }
+    ]
+  },
+
+  "coverage": { "totalFiles": 2345, "cited": 40, "referenced": 27, "notRetrieved": 33 },
+
+  "resources": [
+    { "name": "Flood Resilience Financing.pdf",             "type": "Framework",    "uploaded": "2026-05-14", "uploadedDisplay": "May 14, 2026", "retrievals": 82, "utilization": 95, "negative": 6400, "positive": 6400, "vpu": "AFWW1", "country": "Ghana" },
+    { "name": "Urban Drainage Strategy 2024.docx",          "type": "Strategy",     "uploaded": "2026-05-12", "uploadedDisplay": "May 12, 2026", "retrievals": 79, "utilization": 35, "negative": 5900, "positive": 5900, "vpu": "AFWW1", "country": "Senegal" },
+    { "name": "Drought Resilience Case Studies",            "type": "Web Link",     "uploaded": "2026-05-10", "uploadedDisplay": "May 10, 2026", "retrievals": 74, "utilization": 86, "negative": 4800, "positive": 4800, "vpu": "AFCE1", "country": "Kenya" },
+    { "name": "Digital Public Infrastructure Playbook",     "type": "Playbook",     "uploaded": "2026-04-12", "uploadedDisplay": "Apr 12, 2026", "retrievals": 88, "utilization": 56, "negative": 3000, "positive": 3000, "vpu": "AFWW1", "country": "Ghana" },
+    { "name": "AI Readiness Country Assessments",           "type": "Assessment",   "uploaded": "2026-04-06", "uploadedDisplay": "Apr 6, 2026",  "retrievals": 71, "utilization": 43, "negative": 2900, "positive": 2900, "vpu": "MNCGE", "country": "Morocco" },
+    { "name": "Health Systems Resilience Notes",            "type": "Notes",        "uploaded": "2026-04-06", "uploadedDisplay": "Apr 6, 2026",  "retrievals": 77, "utilization": 93, "negative": 2000, "positive": 2000, "vpu": "AFCE2", "country": "Tanzania" },
+    { "name": "Education Technology Deployment Cases",      "type": "Case Studies", "uploaded": "2026-04-04", "uploadedDisplay": "Apr 4, 2026",  "retrievals": 75, "utilization": 82, "negative": 1200, "positive": 1200, "vpu": "AECE1", "country": "Ethiopia" },
+    { "name": "Debt Sustainability Analysis Repository",    "type": "Repository",   "uploaded": "2026-04-02", "uploadedDisplay": "Apr 2, 2026",  "retrievals": 84, "utilization": 68, "negative": 1100, "positive": 1100, "vpu": "MNCGE", "country": "Egypt" },
+    { "name": "SME Growth and Jobs Repository",             "type": "Repository",   "uploaded": "2026-04-01", "uploadedDisplay": "Apr 1, 2026",  "retrievals": 69, "utilization": 52, "negative": 1000, "positive": 1000, "vpu": "SACFP", "country": "India" }
+  ],
+
+  "resourcePrompts": [
+    {
+      "text": "What financing mechanisms support flood resilience infrastructure?",
+      "negative": 21, "positive": 79,
+      "positiveCount": 84, "negativeCount": 22,
+      "negativeBreakdown": [
+        { "label": "Did not Follow Instructions", "count": 8 },
+        { "label": "Not Factually Correct", "count": 7 },
+        { "label": "Offensive/Unsafe", "count": 0 },
+        { "label": "Wrong Language", "count": 2 },
+        { "label": "Other", "count": 5 }
+      ],
+      "otherComments": [
+        "Did not reference the latest Country Economic Update.",
+        "Wanted productivity figures from 2025, not 2022.",
+        "Missed disaggregated sector data for the AFW region."
+      ]
+    },
+    {
+      "text": "How can governments fund long-term climate resilience projects?",
+      "negative": 26, "positive": 68,
+      "positiveCount": 54, "negativeCount": 21,
+      "negativeBreakdown": [
+        { "label": "Did not Follow Instructions", "count": 6 },
+        { "label": "Not Factually Correct", "count": 8 },
+        { "label": "Offensive/Unsafe", "count": 0 },
+        { "label": "Wrong Language", "count": 2 },
+        { "label": "Other", "count": 5 }
+      ],
+      "otherComments": [
+        "Lacked comparable case studies from peer countries.",
+        "No multi-year financing structures discussed."
+      ]
+    },
+    {
+      "text": "What are effective investment models for urban drainage systems?",
+      "negative": 30, "positive": 64,
+      "positiveCount": 38, "negativeCount": 18,
+      "negativeBreakdown": [
+        { "label": "Did not Follow Instructions", "count": 5 },
+        { "label": "Not Factually Correct", "count": 7 },
+        { "label": "Offensive/Unsafe", "count": 0 },
+        { "label": "Wrong Language", "count": 1 },
+        { "label": "Other", "count": 5 }
+      ],
+      "otherComments": [
+        "Cost figures feel outdated.",
+        "Wanted recent unit-cost benchmarks."
+      ]
+    },
+    {
+      "text": "What PPP structures are commonly used for resilient water infrastructure?",
+      "negative": 24, "positive": 70,
+      "positiveCount": 44, "negativeCount": 15,
+      "negativeBreakdown": [
+        { "label": "Did not Follow Instructions", "count": 5 },
+        { "label": "Not Factually Correct", "count": 4 },
+        { "label": "Offensive/Unsafe", "count": 0 },
+        { "label": "Wrong Language", "count": 2 },
+        { "label": "Other", "count": 4 }
+      ],
+      "otherComments": [
+        "Missed concrete risk-allocation matrices."
+      ]
+    },
+    {
+      "text": "How do countries finance disaster preparedness and flood recovery?",
+      "negative": 28, "positive": 65,
+      "positiveCount": 32, "negativeCount": 14,
+      "negativeBreakdown": [
+        { "label": "Did not Follow Instructions", "count": 4 },
+        { "label": "Not Factually Correct", "count": 5 },
+        { "label": "Offensive/Unsafe", "count": 0 },
+        { "label": "Wrong Language", "count": 2 },
+        { "label": "Other", "count": 3 }
+      ],
+      "otherComments": [
+        "Too focused on developed markets — wanted LMIC-specific examples."
+      ]
+    },
+    {
+      "text": "What role do MDBs play in financing flood resilience projects?",
+      "negative": 25, "positive": 70,
+      "positiveCount": 36, "negativeCount": 13,
+      "negativeBreakdown": [
+        { "label": "Did not Follow Instructions", "count": 4 },
+        { "label": "Not Factually Correct", "count": 5 },
+        { "label": "Offensive/Unsafe", "count": 0 },
+        { "label": "Wrong Language", "count": 1 },
+        { "label": "Other", "count": 3 }
+      ],
+      "otherComments": [
+        "Wanted post-2024 MDB pledge data."
+      ]
+    },
+    {
+      "text": "Which countries have successful flood resilience financing programs?",
+      "negative": 22, "positive": 72,
+      "positiveCount": 28, "negativeCount": 9,
+      "negativeBreakdown": [
+        { "label": "Did not Follow Instructions", "count": 3 },
+        { "label": "Not Factually Correct", "count": 3 },
+        { "label": "Offensive/Unsafe", "count": 0 },
+        { "label": "Wrong Language", "count": 1 },
+        { "label": "Other", "count": 2 }
+      ],
+      "otherComments": [
+        "Lacked evaluation outcomes — wanted impact evaluation summaries."
+      ]
+    }
+  ]
+}

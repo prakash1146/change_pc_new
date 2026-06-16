@@ -1,0 +1,25 @@
+<header class="topbar" [class.is-scrolled]="scrolled()">
+  <p class="topbar-greeting">
+    <strong>Welcome back,</strong>
+    <span class="topbar-greeting-name">{{userName()}}</span>
+  </p>
+
+  <div class="topbar-actions">
+    <wbct-date-range-filter />
+
+    <div class="workspace-toggle" role="group" aria-label="Workspace">
+      <button
+        type="button"
+        class="workspace-btn"
+        [class.is-active]="workspace() === 'wb'"
+        (click)="setSegment('wb')"
+      >Inter</button>
+      <button
+        type="button"
+        class="workspace-btn"
+        [class.is-active]="workspace() === 'ops'"
+        (click)="setSegment('ops')"
+      >Operational Staff</button>
+    </div>
+  </div>
+</header>

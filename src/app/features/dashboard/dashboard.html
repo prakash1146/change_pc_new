@@ -1,0 +1,73 @@
+
+<!-- ============= Usage ============= -->
+<section>
+  <header class="section-head">
+    <span class="section-head-row">
+      <span class="section-icon">
+         <img src="assets/icons/prompts.svg" alt="" />
+      </span>
+      <span class="section-title">Usage</span>
+    </span>
+    <span class="section-rule"></span>
+  </header>
+
+  <div class="kpi-grid kpi-grid--5">
+    @for (k of kpis(); track k.title) {
+      <article class="kpi-card">
+        <h3 class="kpi-card-title">{{ k.title }}</h3>
+
+        <div class="kpi-metrics">
+          @for (m of k.metrics; track $index; let i = $index) {
+            @if (i > 0) {
+              <span class="kpi-metric-sep" aria-hidden="true">|</span>
+            }
+            <div class="kpi-metric">
+              <span class="kpi-metric-value">{{ m.value }}</span>
+              @if (m.label) {
+                <span class="kpi-metric-label">{{ m.label }}</span>
+              }
+              @if (m.delta) {
+                <span class="kpi-metric-delta">{{ m.delta }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Sub text that labels the primary metric sits above the divider -->
+        @if (k.sub && (k.secondaryMetrics?.length || k.barPct !== undefined)) {
+          <p class="kpi-card-sub">{{ k.sub }}</p>
+        }
+
+        <hr class="kpi-card-rule" />
+
+        @if (k.secondaryMetrics?.length) {
+          <div class="kpi-metrics kpi-metrics--secondary">
+            @for (m of k.secondaryMetrics; track $index) {
+              <div class="kpi-metric">
+                <span class="kpi-metric-value">{{ m.value }}</span>
+                @if (m.label) {
+                  <span class="kpi-metric-label">{{ m.label }}</span>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        @if (k.barPct !== undefined) {
+          <div class="kpi-bar-wrap">
+            <div class="kpi-bar-track">
+              <div class="kpi-bar-fill" [style.width.%]="k.barPct"></div>
+            </div>
+            <span class="kpi-bar-label">{{ k.barPct }}% of staff</span>
+          </div>
+        }
+
+        <!-- Sub text with no secondary content is itself the footer, below the divider -->
+        @if (k.sub && !(k.secondaryMetrics?.length || k.barPct !== undefined)) {
+          <p class="kpi-card-sub">{{ k.sub }}</p>
+        }
+      </article>
+    }
+  </div>
+</section>
+

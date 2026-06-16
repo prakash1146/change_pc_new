@@ -1,0 +1,287 @@
+<!-- Back link + title + meta + date range -->
+<header class="cd-header">
+  <div class="cd-header-left">
+    <a class="cd-back" routerLink="/assets">
+      <tabler-icon icon="chevron-left" [size]="14" />
+      Back to Assets Overview
+    </a>
+    <h1 class="cd-title">{{ name() }}</h1>
+    <ul class="cd-meta">
+      <li><span class="cd-meta-label">Type:</span> {{ meta()?.type }}</li>
+      <li><span class="cd-meta-label">Verticals:</span> {{ meta()?.verticals }}</li>
+      <li><span class="cd-meta-label">Sectors:</span> {{ meta()?.sectors }}</li>
+      <li><span class="cd-meta-label">Updated:</span> {{ meta()?.updated }}</li>
+    </ul>
+  </div>
+
+  <button type="button" class="cd-date-btn">
+    <tabler-icon icon="calendar-month" [size]="16" />
+    <span>Customise Date Range</span>
+    <tabler-icon icon="chevron-down" [size]="14" />
+  </button>
+</header>
+
+<!-- KPI row -->
+<section class="kpi-grid kpi-grid--4">
+  @for (k of kpis(); track k.title) {
+    <article class="kpi-card">
+      <h3 class="kpi-card-title">{{ k.title }}</h3>
+      <div class="kpi-metrics">
+        @for (m of k.metrics; track $index) {
+          <div class="kpi-metric">
+            <span class="kpi-metric-value">{{ m.value }}</span>
+            @if (m.delta) { <span class="kpi-metric-delta">{{ m.delta }}</span> }
+          </div>
+        }
+      </div>
+      @if (k.sub) {
+        <p class="kpi-card-sub">{{ k.sub }}</p>
+      }
+      @if (k.feedback) {
+        <div class="kpi-feedback">
+          <span class="kpi-feedback-item kpi-feedback-item--positive">
+            <tabler-icon icon="thumb-up" [size]="18" />
+            <strong>{{ k.feedback.positive }}%</strong>
+          </span>
+          <span class="kpi-feedback-item kpi-feedback-item--negative">
+            <tabler-icon icon="thumb-down" [size]="18" />
+            <strong>{{ k.feedback.negative }}%</strong>
+          </span>
+        </div>
+      }
+    </article>
+  }
+</section>
+
+
+
+<!-- Resources table -->
+<section class="cd-resources">
+  <header class="cd-resources-head">
+    <h2 class="cd-resources-title">Resources</h2>
+  </header>
+
+  <table class="cd-resources-table">
+    <thead>
+      <tr>
+        @for (col of [
+          { key: 'name',        label: 'Name'              },
+          { key: 'type',        label: 'Type'              },
+          { key: 'uploaded',    label: 'Uploaded'          },
+          { key: 'retrievals',  label: 'Retrievals'        },
+          { key: 'utilization', label: 'Utilization Rate'  },
+          { key: 'negative',    label: 'Negative Feedback' },
+          { key: 'positive',    label: 'Positive Feedback' }
+        ]; track col.key) {
+          <th>
+            <button type="button" class="reg-sort-th" (click)="toggleResSort($any(col.key))">
+              {{ col.label }}
+              <tabler-icon
+                class="reg-sort-caret"
+                [class.is-active]="resSortKey() === col.key"
+                [icon]="resSortKey() === col.key && resSortDir() === 'asc' ? 'arrow-up' : 'arrow-down'"
+                [size]="12"
+              />
+            </button>
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (r of sortedResources(); track r.name) {
+        <tr class="resource-row" (click)="openResourceDrawer(r)">
+          <td><span class="reg-cell-link">{{ r.name }}</span></td>
+          <td><span class="reg-cell-link">{{ r.type }}</span></td>
+          <td><span class="reg-cell-link">{{ r.uploadedDisplay }}</span></td>
+          <td><span class="reg-cell-link">{{ r.retrievals }}%</span></td>
+          <td><span class="reg-cell-link">{{ r.utilization }}%</span></td>
+          <td><span class="reg-cell-link">{{ formatNum(r.negative) }}</span></td>
+          <td><span class="reg-cell-link">{{ formatNum(r.positive) }}</span></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>
+
+<!-- ========================= Resource Details drawer ========================= -->
+@if (drawerOpen()) {
+  <div class="rd-backdrop" (click)="closeDrawer()"></div>
+}
+
+<aside
+  class="rd-drawer"
+  [class.is-open]="drawerOpen()"
+  [attr.aria-hidden]="!drawerOpen()"
+  aria-label="Resource details"
+>
+  @if (drawerResource(); as r) {
+    <!-- VIEW 1: resource overview + prompts list -->
+    @if (drawerView() === 'resource') {
+      <header class="rd-head">
+        <h2 class="rd-head-title">Resource Details</h2>
+        <button class="rd-close" type="button" (click)="closeDrawer()" aria-label="Close">
+          <tabler-icon icon="x" [size]="18" />
+        </button>
+      </header>
+
+      <div class="rd-body">
+        <div class="rd-resource-row">
+          <span class="rd-file-icon">
+            <tabler-icon icon="file-text" [size]="22" />
+            <span class="rd-file-tag">PDF</span>
+          </span>
+          <div class="rd-resource-text">
+            <div class="rd-resource-name">{{ r.name }}</div>
+            <ul class="rd-resource-meta">
+              <li><span class="rd-resource-meta-label">VPU:</span> {{ r.vpu }}</li>
+              <li><span class="rd-resource-meta-label">Country:</span> {{ r.country }}</li>
+              <li><span class="rd-resource-meta-label">Updated:</span> {{ r.uploadedDisplay }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="rd-stats">
+          <div class="rd-stat-card">
+            <div class="rd-stat-label">Source Occurence</div>
+            <div class="rd-stat-row">
+              <span class="rd-stat-value">{{ drawerSourceOccurrence() }}</span>
+              <span class="rd-stat-delta">+2</span>
+            </div>
+          </div>
+          <div class="rd-stat-card">
+            <div class="rd-stat-label">Reliability Score</div>
+            <div class="rd-stat-row">
+              <span class="rd-stat-value">{{ drawerReliability() }}</span>
+              <span class="rd-stat-delta">+0.1</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="rd-section-title">User Prompt Types</h3>
+
+        <table class="rd-prompts-table">
+          <thead>
+            <tr>
+              <th>
+                <button type="button" class="reg-sort-th" (click)="togglePromptSort('name')">
+                  Name
+                  <tabler-icon
+                    class="reg-sort-caret"
+                    [class.is-active]="promptSortKey() === 'name'"
+                    [icon]="promptSortKey() === 'name' && promptSortDir() === 'asc' ? 'arrow-up' : 'arrow-down'"
+                    [size]="12"
+                  />
+                </button>
+              </th>
+              <th>
+                <button type="button" class="reg-sort-th" (click)="togglePromptSort('negative')">
+                  Negative Feedback
+                  <tabler-icon
+                    class="reg-sort-caret"
+                    [class.is-active]="promptSortKey() === 'negative'"
+                    [icon]="promptSortKey() === 'negative' && promptSortDir() === 'asc' ? 'arrow-up' : 'arrow-down'"
+                    [size]="12"
+                  />
+                </button>
+              </th>
+              <th>
+                <button type="button" class="reg-sort-th" (click)="togglePromptSort('positive')">
+                  Positive Feedback
+                  <tabler-icon
+                    class="reg-sort-caret"
+                    [class.is-active]="promptSortKey() === 'positive'"
+                    [icon]="promptSortKey() === 'positive' && promptSortDir() === 'asc' ? 'arrow-up' : 'arrow-down'"
+                    [size]="12"
+                  />
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of sortedPrompts(); track p.text) {
+              <tr class="prompt-row" (click)="openPromptDetail(p)">
+                <td><span class="reg-cell-link">{{ p.text }}</span></td>
+                <td>
+                  <span class="rd-fb rd-fb--negative">
+                    <tabler-icon icon="thumb-down" [size]="14" />{{ p.negative }}%
+                  </span>
+                </td>
+                <td>
+                  <span class="rd-fb rd-fb--positive">
+                    <tabler-icon icon="thumb-up" [size]="14" />{{ p.positive }}%
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <!-- VIEW 2: aggregated feedback for this prompt type (back arrow returns to view 1) -->
+    @if (drawerView() === 'prompt' && drawerPrompt(); as p) {
+      <header class="rd-head rd-head--prompt">
+        <button class="rd-back" type="button" (click)="backToResource()" aria-label="Back">
+          <tabler-icon icon="arrow-left" [size]="18" />
+        </button>
+        <h2 class="rd-head-title rd-head-title--prompt">{{ p.text }}</h2>
+      </header>
+
+      <div class="rd-body">
+        <!-- Aggregate summary: total feedback + positive + negative -->
+        <div class="rd-fb-summary">
+          <div class="rd-fb-summary-item">
+            <div class="rd-fb-summary-value">{{ p.positiveCount + p.negativeCount }}</div>
+            <div class="rd-fb-summary-label">Total Feedback</div>
+          </div>
+          <div class="rd-fb-summary-item">
+            <div class="rd-fb-summary-value rd-fb-summary-value--pos">{{ p.positiveCount }}</div>
+            <div class="rd-fb-summary-label rd-fb-summary-label--pos">
+              <tabler-icon icon="thumb-up" [size]="16" /> Positive Feedback
+            </div>
+          </div>
+          <div class="rd-fb-summary-item">
+            <div class="rd-fb-summary-value rd-fb-summary-value--neg">{{ p.negativeCount }}</div>
+            <div class="rd-fb-summary-label rd-fb-summary-label--neg">
+              <tabler-icon icon="thumb-down" [size]="16" /> Negative Feedback
+            </div>
+          </div>
+        </div>
+
+        <!-- Negative feedback breakdown by reason -->
+        <section class="rd-neg-section">
+          <h3 class="rd-neg-title">Negative Feedback Reasons</h3>
+          <ul class="rd-neg-list">
+            @for (rb of p.negativeBreakdown; track rb.label; let i = $index) {
+              <li class="rd-neg-item">
+                <div class="rd-neg-row">
+                  <span class="rd-neg-index">{{ i + 1 }}</span>
+                  <span class="rd-neg-label">{{ rb.label }}</span>
+                  <span class="rd-neg-count">{{ rb.count }}</span>
+                </div>
+                <div class="rd-neg-bar">
+                  <div
+                    class="rd-neg-bar-fill"
+                    [style.width.%]="p.negativeCount > 0 ? (rb.count / p.negativeCount) * 100 : 0"
+                  ></div>
+                </div>
+              </li>
+            }
+          </ul>
+        </section>
+
+        <!-- Free-text comments captured when users picked "Other" -->
+        @if (p.otherComments.length) {
+          <section class="rd-neg-section">
+            <h3 class="rd-neg-title">Additional Comments from Other</h3>
+            <ul class="rd-neg-comments">
+              @for (c of p.otherComments; track c) {
+                <li>{{ c }}</li>
+              }
+            </ul>
+          </section>
+        }
+      </div>
+    }
+  }
+</aside>

@@ -1,0 +1,222 @@
+{
+  "agentsKpis": [
+    {
+      "title": "Total No. of Agents",
+      "metrics": [{ "value": "8" }],
+      "sub": "all currently live"
+    },
+    {
+      "title": "Top Used Agent",
+      "metrics": [{ "value": "TOR Genie" }],
+      "sub": "62% of tool actions"
+    },
+    {
+      "title": "Agents Success Rate",
+      "metrics": [{ "value": "85%", "delta": "+4pp" }]
+    },
+    {
+      "title": "Agents Utilisation Rate",
+      "metrics": [{ "value": "92%", "delta": "+3pp" }]
+    }
+  ],
+
+  "agentPromptUsage": [
+    { "name": "TOR Genie",    "prompts": 248 },
+    { "name": "Sherlock",     "prompts": 197 },
+    { "name": "Lessons",      "prompts": 142 },
+    { "name": "Expert Twins", "prompts":  52 }
+  ],
+
+  "actionDownloads": [
+    { "label": "TORs Downloads",     "count": 52 },
+    { "label": "Summary Downloads",  "count": 38 },
+    { "label": "Projects Downloads", "count": 18 },
+    { "label": "Lessons Downloads",  "count": 12 }
+  ],
+
+  "overviewKpis": [
+    {
+      "title": "Total Collections",
+      "metrics": [{ "value": "128" }],
+      "sub": "5,230 resources"
+    },
+    {
+      "title": "Curated Resources",
+      "metrics": [{ "value": "4,230" }]
+    },
+    {
+      "title": "Accessed Collections",
+      "metrics": [{ "value": "95" }]
+    }
+  ],
+
+  "registryRows": [
+    { "name": "Data360",                                "status": "Curated",        "verticals": ["Prosperity", "Planet", "People"], "sectors": ["Cross-Cutting", "Statistics"], "lastUpdated": "2026-05-20", "lastUpdatedDisplay": "May 20, 2026", "utilization": 92, "queries": 7400 },
+    { "name": "Climate Adaptation Financing Framework", "status": "Curated",        "verticals": ["Planet"],         "sectors": ["Climate", "Finance"],            "lastUpdated": "2026-05-12", "lastUpdatedDisplay": "May 12, 2026", "utilization": 67, "queries": 5900 },
+    { "name": "Water Resilience Toolkit",               "status": "Curated",        "verticals": ["Planet"],         "sectors": ["Water", "Climate"],              "lastUpdated": "2026-05-12", "lastUpdatedDisplay": "May 12, 2026", "utilization": 79, "queries": 5900 },
+    { "name": "Urban Flooding & Drainage Reports",      "status": "Pending Review", "verticals": ["Infrastructure"], "sectors": ["Urban", "Water", "Infrastructure"], "lastUpdated": "2026-05-10", "lastUpdatedDisplay": "May 10, 2026", "utilization": 74, "queries": 4800 },
+    { "name": "Digital Public Infrastructure Playbook", "status": "Curated",        "verticals": ["Digital & AI"],   "sectors": ["Digital Access", "Governance"],  "lastUpdated": "2026-04-12", "lastUpdatedDisplay": "Apr 12, 2026", "utilization": 88, "queries": 3000 },
+    { "name": "AI Readiness Country Assessments",       "status": "Auto-Ingested",  "verticals": ["Digital & AI"],   "sectors": ["AI", "Public Sector"],           "lastUpdated": "2026-04-06", "lastUpdatedDisplay": "Apr 6, 2026",  "utilization": 71, "queries": 2900 },
+    { "name": "Health Systems Resilience Notes",        "status": "Curated",        "verticals": ["People"],         "sectors": ["Health", "Social Protection"],   "lastUpdated": "2026-04-06", "lastUpdatedDisplay": "Apr 6, 2026",  "utilization": 77, "queries": 2000 },
+    { "name": "Education Technology Deployment Cases",  "status": "In Progress",    "verticals": ["People"],         "sectors": ["Education", "Digital Access"],   "lastUpdated": "2026-04-04", "lastUpdatedDisplay": "Apr 4, 2026",  "utilization": 75, "queries": 1200 },
+    { "name": "Debt Sustainability Analysis Repository","status": "Curated",        "verticals": ["Prosperity"],     "sectors": ["Macroeconomics", "Finance"],     "lastUpdated": "2026-04-02", "lastUpdatedDisplay": "Apr 2, 2026",  "utilization": 84, "queries": 1100 },
+    { "name": "SME Growth and Jobs Repository",         "status": "Pending Review", "verticals": ["People"],         "sectors": ["Jobs", "Private Sector"],        "lastUpdated": "2026-04-01", "lastUpdatedDisplay": "Apr 1, 2026",  "utilization": 69, "queries": 1000 }
+  ],
+
+  "vpuUsage": {
+    "reaches": 54,
+    "totalVpus": 69,
+    "top": [
+      { "code": "MTI",      "name": "Macroeconomics, Trade & Investment",         "pct": 92 },
+      { "code": "SCA",      "name": "Climate Change",                             "pct": 84 },
+      { "code": "OPCS",     "name": "Operations Policy & Country Services",       "pct": 78 },
+      { "code": "GGW",      "name": "Water Global Practice",                      "pct": 71 },
+      { "code": "AFCE1",    "name": "Eastern & Southern Africa CU 1",             "pct": 64 },
+      { "code": "EFI",      "name": "Equitable Growth, Finance & Institutions",   "pct": 58 },
+      { "code": "GGE",      "name": "Environment",                                "pct": 52 },
+      { "code": "IFCINFRA", "name": "IFC Infrastructure",                         "pct": 44 }
+    ]
+  },
+
+  "vpuContribution": [
+    { "code": "MTI",      "name": "Macroeconomics, Trade & Investment",         "count": 920 },
+    { "code": "SCA",      "name": "Climate Change",                             "count": 760 },
+    { "code": "GGW",      "name": "Water Global Practice",                      "count": 590 },
+    { "code": "OPCS",     "name": "Operations Policy & Country Services",       "count": 480 },
+    { "code": "AFCE1",    "name": "Eastern & Southern Africa CU 1",             "count": 360 },
+    { "code": "EFI",      "name": "Equitable Growth, Finance & Institutions",   "count": 320 },
+    { "code": "GGE",      "name": "Environment",                                "count": 280 },
+    { "code": "IFCINFRA", "name": "IFC Infrastructure",                         "count": 220 }
+  ],
+
+  "agentsData": {
+    "nodes": [
+      { "id": "orch", "label": "MultiAgent Synthesis", "usage": "high", "level": "root",
+        "x": 830, "y": 30, "queries": 639 },
+      { "id": "tor",  "label": "TOR Genie",                                    "usage": "high",   "level": "leaf", "x": 25,   "y": 240, "queries": 248 },
+      { "id": "sher", "label": "Sherlock Expertise Detective",                 "usage": "high",   "level": "leaf", "x": 255,  "y": 240, "queries": 142 },
+      { "id": "less", "label": "Lessons Explorer",                             "usage": "medium", "level": "leaf", "x": 485,  "y": 240, "queries":  52 },
+      { "id": "grum", "label": "Grumpy Reviewer",                              "usage": "high",   "level": "leaf", "x": 715,  "y": 240, "queries": 140 },
+      { "id": "lit",  "label": "Literature Review and Policy Paper Generator", "usage": "medium", "level": "leaf", "x": 945,  "y": 240, "queries":  43 },
+      { "id": "isr",  "label": "ISR Issues Explorer",                          "usage": "low",    "level": "leaf", "x": 1175, "y": 240, "queries":  18 },
+      { "id": "sspa", "label": "Self-Service Portfolio Analysis (SSPA)",       "usage": "high",   "level": "leaf", "x": 1405, "y": 240, "queries":  82 },
+      { "id": "wbg",  "label": "WBG Translate Tool",                           "usage": "high",   "level": "leaf", "x": 1635, "y": 240, "queries":  98 }
+    ],
+    "links": [
+      { "from": "orch", "to": "tor" },
+      { "from": "orch", "to": "sher" },
+      { "from": "orch", "to": "less" },
+      { "from": "orch", "to": "grum" },
+      { "from": "orch", "to": "lit" },
+      { "from": "orch", "to": "isr" },
+      { "from": "orch", "to": "sspa" },
+      { "from": "orch", "to": "wbg" }
+    ],
+    "agentsCount": 9,
+    "highCount": 6,
+    "mediumCount": 2,
+    "lowCount": 1
+  },
+
+  "collectionsData": {
+    "nodes": [
+      { "id": "idx", "label": "Source Index", "usage": "high", "level": "root", "x": 510, "y": 20 },
+      { "id": "docs",    "label": "Documents",       "usage": "high",   "level": "branch", "x": 20,  "y": 180 },
+      { "id": "wikis",   "label": "Wikis",           "usage": "high",   "level": "branch", "x": 235, "y": 180 },
+      { "id": "struct",  "label": "Structured Data", "usage": "medium", "level": "branch", "x": 450, "y": 180,
+        "warning": { "text": "Schema Drift", "severity": "warning" } },
+      { "id": "web",     "label": "Web Sources",     "usage": "high",   "level": "branch", "x": 665, "y": 180 },
+      { "id": "streams", "label": "Event Streams",   "usage": "low",    "level": "branch", "x": 880, "y": 180,
+        "warning": { "text": "Possible Stale Data", "severity": "danger" } },
+      { "id": "sp",    "label": "SharePoint Library",    "usage": "high",   "level": "leaf", "x": 20,  "y": 350 },
+      { "id": "conf",  "label": "Confluence Wiki",       "usage": "high",   "level": "leaf", "x": 235, "y": 350 },
+      { "id": "sql",   "label": "SQL Data Warehouse",    "usage": "medium", "level": "leaf", "x": 450, "y": 350,
+        "warning": { "text": "Sync Lag 14d", "severity": "warning" } },
+      { "id": "crawl", "label": "External Web Crawler",  "usage": "high",   "level": "leaf", "x": 665, "y": 350 },
+      { "id": "kafka", "label": "Kafka Event Stream",    "usage": "low",    "level": "leaf", "x": 880, "y": 350,
+        "warning": { "text": "Connection Errors", "severity": "danger" } }
+    ],
+    "links": [
+      { "from": "idx", "to": "docs" },
+      { "from": "idx", "to": "wikis" },
+      { "from": "idx", "to": "struct" },
+      { "from": "idx", "to": "web" },
+      { "from": "idx", "to": "streams" },
+      { "from": "docs",    "to": "sp" },
+      { "from": "wikis",   "to": "conf" },
+      { "from": "struct",  "to": "sql" },
+      { "from": "web",     "to": "crawl" },
+      { "from": "streams", "to": "kafka" }
+    ],
+    "agentsCount": 11,
+    "highCount": 8,
+    "mediumCount": 2,
+    "lowCount": 1
+  },
+
+  "collectionKpis": [
+    {
+      "title": "Total Sources Integrated",
+      "value": "128",
+      "sub": "16,201 resources · priority coverage baselining in progress",
+      "icon": "stack-2",
+      "tone": "purple",
+      "pct": 80
+    },
+    {
+      "title": "Overall Coverage",
+      "value": "22%",
+      "sub": "collections actively queried this period",
+      "secondary": "28 of 128 collections with recorded query activity · Jan–May 2026",
+      "target": "Target: 80% by FY-end",
+      "icon": "target",
+      "tone": "amber",
+      "pct": 22
+    },
+    {
+      "title": "Cross-Unit Access Rate",
+      "value": "34%",
+      "sub": "estimated cross-region query rate",
+      "secondary": "queries where user region differs from content region · proxy measure",
+      "tooltip": "Calculated as queries from non-AFW countries on AFW-tagged content as a proportion of total queries. Full instrumentation requires user profile to content origin join, available Phase 2.",
+      "icon": "arrows-shuffle",
+      "tone": "cyan",
+      "pct": 34
+    },
+    {
+      "title": "Freshness Alert",
+      "value": "3",
+      "sub": "collections flagged — confirm against K360 platform sync logs",
+      "icon": "alert-triangle",
+      "tone": "red",
+      "pct": 20
+    }
+  ],
+
+  "collectionsList": [
+    { "name": "Policy Research Working Papers",          "icon": "library",   "type": "Research",   "status": "integrated",  "coverage": 92, "sourceUtilisation": 78, "lastSynced": "2d ago",  "freshness": "current",  "demand": "high",      "queries": 2840 },
+    { "name": "Country Economic Updates",                "icon": "map",       "type": "Country",    "status": "integrated",  "coverage": 88, "sourceUtilisation": 84, "lastSynced": "1d ago",  "freshness": "current",  "demand": "very-high", "queries": 4860 },
+    { "name": "Macro Poverty Outlook",                   "icon": "chart-bar", "type": "Macro",      "status": "integrated",  "coverage": 86, "sourceUtilisation": 72, "lastSynced": "3d ago",  "freshness": "current",  "demand": "high",      "queries": 1920 },
+    { "name": "IFC Insights and Reports",                "icon": "briefcase", "type": "IFC",        "status": "integrated",  "coverage": 78, "sourceUtilisation": 58, "lastSynced": "5d ago",  "freshness": "current",  "demand": "medium",    "queries":   14 },
+    { "name": "Energy Sector Management Assistance Program", "icon": "flag",  "type": "Sector",     "status": "in-progress", "coverage": 64, "sourceUtilisation": 62, "lastSynced": "8d ago",  "freshness": "aging",    "demand": "rising",    "queries":   17 },
+    { "name": "Miscellaneous Knowledge Notes",           "icon": "file-text", "type": "Notes",      "status": "integrated",  "coverage": 52, "sourceUtilisation": 28, "lastSynced": "14d ago", "freshness": "aging",    "demand": "low",       "queries":    6 },
+    { "name": "ICRR Archive",                            "icon": "report",    "type": "Evaluation", "status": "integrated",  "coverage": 80, "sourceUtilisation": 66, "lastSynced": "4d ago",  "freshness": "current",  "demand": "high",      "queries": 1240 },
+    { "name": "TOR Library",                             "icon": "file-text", "type": "TOR",        "status": "integrated",  "coverage": 95, "sourceUtilisation": 88, "lastSynced": "1d ago",  "freshness": "current",  "demand": "very-high", "queries": 9420 },
+    { "name": "Country Partnership Frameworks",          "icon": "star",      "type": "Country",    "status": "in-progress", "coverage": 58, "sourceUtilisation": 44, "lastSynced": "18d ago", "freshness": "aging",    "demand": "medium",    "queries":    9 },
+    { "name": "Procurement Notices Archive",             "icon": "package",   "type": "Library",    "status": "pending",     "coverage": 12, "sourceUtilisation": 6,  "lastSynced": "52d ago", "freshness": "stale",    "demand": "low",       "queries":    0 }
+  ],
+
+  "statusOptions": [
+    { "id": "all",         "label": "All Statuses" },
+    { "id": "integrated",  "label": "Integrated" },
+    { "id": "in-progress", "label": "In Progress" },
+    { "id": "pending",     "label": "Pending" }
+  ],
+
+  "defaultGovernance": [
+    { "label": "Re-index Collection",        "icon": "refresh",    "intent": "primary" },
+    { "label": "Review Metadata Tags",       "icon": "tag" },
+    { "label": "Adjust Retrieval Weighting", "icon": "chart-bar" },
+    { "label": "View Audit Log",             "icon": "report" }
+  ]
+}

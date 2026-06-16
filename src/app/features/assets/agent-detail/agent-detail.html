@@ -1,0 +1,136 @@
+<!-- Back link + title row with filter bar -->
+<header class="ad-header">
+  <div class="ad-header-left">
+    <a class="ad-back" routerLink="/assets" [queryParams]="{ tab: 'agents' }">
+      <tabler-icon icon="chevron-left" [size]="14" />
+      Back to Assets Overview
+    </a>
+    <h1 class="ad-title">{{ name() }}</h1>
+  </div>
+
+  <div class="assets-filter-bar">
+    <button type="button" class="filter-btn">
+      <tabler-icon icon="calendar-month" [size]="16" />
+      <span>Select Region/Country</span>
+      <tabler-icon icon="chevron-down" [size]="14" />
+    </button>
+    <button type="button" class="filter-btn">
+      <tabler-icon icon="calendar-month" [size]="16" />
+      <span>Select Vertical/Sector</span>
+      <tabler-icon icon="chevron-down" [size]="14" />
+    </button>
+    <button type="button" class="filter-btn">
+      <tabler-icon icon="calendar-month" [size]="16" />
+      <span>Customise Date Range</span>
+      <tabler-icon icon="chevron-down" [size]="14" />
+    </button>
+
+  </div>
+</header>
+
+<!-- 4 KPI cards -->
+<section class="kpi-grid kpi-grid--4">
+  @for (k of kpis(); track k.title) {
+    <article class="kpi-card">
+      <h3 class="kpi-card-title">{{ k.title }}</h3>
+      @if (k.metrics.length) {
+        <div class="kpi-metrics">
+          @for (m of k.metrics; track $index) {
+            <div class="kpi-metric">
+              <span class="kpi-metric-value">{{ m.value }}</span>
+              @if (m.delta) { <span class="kpi-metric-delta">{{ m.delta }}</span> }
+            </div>
+          }
+        </div>
+      }
+      @if (k.feedback) {
+        <div class="ad-feedback">
+          <span class="ad-feedback-item ad-feedback-item--positive">
+            <tabler-icon icon="thumb-up" [size]="22" />
+            <strong>{{ k.feedback.positive }}%</strong>
+          </span>
+          <span class="ad-feedback-item ad-feedback-item--negative">
+            <tabler-icon icon="thumb-down" [size]="22" />
+            <strong>{{ k.feedback.negative }}%</strong>
+          </span>
+        </div>
+      }
+      @if (k.sub) {
+        <p class="kpi-card-sub">{{ k.sub }}</p>
+      }
+    </article>
+  }
+</section>
+
+<!-- Two panels: Collections | Prompt Categories -->
+<section class="ad-split">
+  <!-- Collections Supporting <Tab> -->
+  <article class="ad-panel">
+    <h3 class="ad-panel-title">{{ collectionsTitle() }}</h3>
+    <table class="ad-coll-table">
+      <thead>
+        <tr>
+          <th>
+            <button type="button" class="reg-sort-th" (click)="toggleColSort('collection')">
+              Collection
+              <tabler-icon
+                class="reg-sort-caret"
+                [class.is-active]="colSortKey() === 'collection'"
+                [icon]="colSortKey() === 'collection' && colSortDir() === 'asc' ? 'arrow-up' : 'arrow-down'"
+                [size]="12"
+              />
+            </button>
+          </th>
+          <th>
+            <button type="button" class="reg-sort-th" (click)="toggleColSort('contribution')">
+              Contribution Rate
+              <tabler-icon
+                class="reg-sort-caret"
+                [class.is-active]="colSortKey() === 'contribution'"
+                [icon]="colSortKey() === 'contribution' && colSortDir() === 'asc' ? 'arrow-up' : 'arrow-down'"
+                [size]="12"
+              />
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (c of sortedCollections(); track c.name) {
+          <tr>
+            <td><a class="reg-cell-link" [routerLink]="['/assets/collection', slugFor(c.name)]">{{ c.name }}</a></td>
+            <td>
+              <a class="reg-cell-link" [routerLink]="['/assets/collection', slugFor(c.name)]">{{ c.contribution }}%</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </article>
+
+  <!-- Prompt Categories with tabs and treemap -->
+  <article class="ad-panel">
+    <h3 class="ad-panel-title">Prompt Categories</h3>
+    <nav class="ad-panel-tabs">
+      @for (t of tabDefs(); track t.id) {
+        <button
+          type="button"
+          class="ad-panel-tab"
+          [class.is-active]="activeTab() === t.id"
+          (click)="activeTab.set(t.id)"
+        >{{ t.label }}</button>
+      }
+    </nav>
+    <div class="treemap">
+      @for (c of activeCategories(); track c.label; let i = $index) {
+        <div class="treemap-tile" [attr.data-rank]="i + 1">
+          <div class="treemap-tile-label">{{ c.label }}</div>
+          <div class="treemap-tile-stats">
+            <strong>{{ c.pct }}%</strong>
+            <span class="treemap-tile-dot">·</span>
+            <span>{{ c.prompts }} prompts</span>
+          </div>
+        </div>
+      }
+    </div>
+  </article>
+</section>

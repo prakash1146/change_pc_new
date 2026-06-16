@@ -1,0 +1,52 @@
+{
+  "kpis": [
+    {
+      "title": "AI Response Time",
+      "value": "5.2s",
+      "delta": "+18%",
+      "deltaPositiveIsGood": false,
+      "sub": "avg. time to first token"
+    },
+    {
+      "title": "No Answer Events",
+      "value": "5",
+      "sub": "queries returning no result"
+    }
+  ],
+
+  "kptTabDefs": [
+    { "id": "knowledge", "label": "Knowledge" },
+    { "id": "people", "label": "People" },
+    { "id": "tasks", "label": "Tasks" }
+  ],
+
+  "knowledgeNoAnswer": [
+    [
+      { "id": "restricted",    "name": "Restricted Sensitive Topics", "pct": 38, "count": 3, "color": "#4B5563", "topicId": "oth" },
+      { "id": "niche-country", "name": "Niche Country Data",          "pct": 25, "count": 2, "color": "#6B7280", "topicId": "eg" },
+      { "id": "pre-2000",      "name": "Pre-2000 Archive Queries",    "pct": 13, "count": 1, "color": "#7B838E", "topicId": "les" },
+      { "id": "cross-sector",  "name": "Cross-Sector Edge Cases",     "pct": 12, "count": 1, "color": "#8B939E", "topicId": "cli" },
+      { "id": "external-src",  "name": "Non-WB External Sources",     "pct": 12, "count": 1, "color": "#9CA3AF", "topicId": "oth" }
+    ]
+  ],
+
+  "peopleNoAnswer": [
+    [
+      { "id": "departed",  "name": "Departed Staff Profiles",  "pct": 29, "count": 2, "color": "#4B5563", "topicId": "exp" },
+      { "id": "external",  "name": "External Consultants",     "pct": 29, "count": 2, "color": "#6B7280", "topicId": "peer" },
+      { "id": "junior",    "name": "Junior / Intern Profiles", "pct": 14, "count": 1, "color": "#7B838E", "topicId": "cel" },
+      { "id": "visiting",  "name": "Visiting Faculty",         "pct": 14, "count": 1, "color": "#8B939E", "topicId": "exp" },
+      { "id": "non-wb",    "name": "Non-WB Affiliations",      "pct": 14, "count": 1, "color": "#9CA3AF", "topicId": "peer" }
+    ]
+  ],
+
+  "tasksNoAnswer": [
+    [
+      { "id": "realtime",     "name": "Real-Time Data Generation", "pct": 33, "count": 2, "color": "#4B5563", "topicId": "tor" },
+      { "id": "media",        "name": "Image / Media Outputs",     "pct": 17, "count": 1, "color": "#6B7280", "topicId": "doc" },
+      { "id": "formula",      "name": "Custom Formula Synthesis",  "pct": 17, "count": 1, "color": "#7B838E", "topicId": "syn" },
+      { "id": "multilingual", "name": "Multilingual TOR Drafts",   "pct": 17, "count": 1, "color": "#8B939E", "topicId": "tor" },
+      { "id": "translation",  "name": "Live Translation Tasks",    "pct": 16, "count": 1, "color": "#9CA3AF", "topicId": "syn" }
+    ]
+  ]
+}

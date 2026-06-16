@@ -1,0 +1,239 @@
+<header class="page-header">
+  <div class="page-header-title">
+    <h1 class="title">Feedback</h1>
+  </div>
+
+  <div class="feedback-filter-bar">
+    <wbct-hier-filter
+      placeholder="Select Region/Country"
+      [groups]="regionGroups"
+      [initialSelected]="initialRegionCountry"
+    />
+    <wbct-hier-filter placeholder="Select VPUs"           [groups]="vpuGroups" />
+    <wbct-date-range-filter />
+  </div>
+</header>
+
+<!-- Row 1: 3 KPI cards -->
+<section class="kpi-grid kpi-grid--3">
+  <article class="kpi-card">
+    <h3 class="kpi-card-title">Active Users</h3>
+    <div class="kpi-metrics">
+      <div class="kpi-metric">
+        <span class="kpi-metric-value">{{ activeUsers()?.value }}</span>
+        <span class="kpi-metric-delta">{{ activeUsers()?.delta }}</span>
+      </div>
+    </div>
+    <p class="kpi-card-sub">{{ activeUsers()?.sub }}</p>
+  </article>
+
+  <article class="kpi-card">
+    <h3 class="kpi-card-title">Unique Users with Feedback</h3>
+    <div class="kpi-metrics">
+      <div class="kpi-metric">
+        <span class="kpi-metric-value">{{ uniqueWithFeedback()?.value }}</span>
+        <span class="kpi-metric-delta">{{ uniqueWithFeedback()?.delta }}</span>
+      </div>
+    </div>
+    <p class="kpi-card-sub">{{ uniqueWithFeedback()?.sub }}</p>
+  </article>
+
+  <article class="kpi-card">
+    <h3 class="kpi-card-title">Total Received Feedback</h3>
+    <div class="kpi-metrics">
+      <div class="kpi-metric">
+        <span class="kpi-metric-value">{{ totalFeedback()?.value }}</span>
+      </div>
+    </div>
+    <div class="feedback-split">
+      <span class="feedback-split-item feedback-split-item--up">
+        <tabler-icon icon="thumb-up" [size]="18" />
+        <span class="feedback-split-pct">{{ totalFeedback()?.positivePct }}%</span>
+      </span>
+      <span class="feedback-split-item feedback-split-item--down">
+        <tabler-icon icon="thumb-down" [size]="18" />
+        <span class="feedback-split-pct">{{ totalFeedback()?.negativePct }}%</span>
+      </span>
+    </div>
+  </article>
+</section>
+
+<!-- Row 2: Flagged categories treemap + ranked collections + neg-type breakdown -->
+<section class="flagged-row">
+  <article class="card flagged-card flagged-card--treemap">
+    <h3 class="card-title">Most Flagged Prompt Categories</h3>
+
+    <div class="flagged-treemap">
+      @for (row of flaggedCategories(); track $index) {
+        <div class="flagged-treemap-row" [style.flex]="rowFlex(row)">
+          @for (t of row; track t.id) {
+            <div
+              class="flagged-treemap-cell"
+              [class.is-trending]="t.trending"
+              [style.flex]="t.pct"
+              [style.background]="t.color"
+            >
+              <div class="cell-name">{{ t.name }}</div>
+              @if (t.trending) {
+                <div class="cell-trending">
+                  <tabler-icon icon="trending-up" [size]="12" />
+                  Emerging
+                </div>
+              }
+              <div class="cell-meta">
+                <span class="cell-pct">{{ t.pct }}%</span>
+                <span class="cell-dot">·</span>
+                <span class="cell-count">
+                  <tabler-icon icon="thumb-down" [size]="12" />
+                  {{ t.count }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </article>
+
+  <article class="card flagged-card">
+    <h3 class="card-title">Most Flagged Collections</h3>
+    <ul class="ranked-list">
+      @for (c of flaggedCollections(); track c.rank) {
+        <li class="ranked-item">
+          <span class="ranked-num">{{ c.rank }}</span>
+          <div class="ranked-body">
+            <div class="ranked-head">
+              <span class="ranked-title">{{ c.title }}</span>
+              <span class="ranked-pct">
+                <tabler-icon icon="thumb-down" [size]="14" />
+                {{ c.negativePct }}%
+              </span>
+            </div>
+            <div class="ranked-bar">
+              <span class="ranked-bar-fill" [style.width.%]="c.negativePct"></span>
+            </div>
+            <span class="ranked-sub">{{ c.prompts }} prompts</span>
+          </div>
+        </li>
+      }
+    </ul>
+  </article>
+
+  <article class="card flagged-card">
+    <h3 class="card-title">Top Negative Feedback Types</h3>
+    <ul class="ranked-list">
+      @for (t of topNegativeTypes(); track t.title; let i = $index) {
+        <li class="ranked-item">
+          <span class="ranked-num">{{ i + 1 }}</span>
+          <div class="ranked-body">
+            <div class="ranked-head">
+              <span class="ranked-title">{{ t.title }}</span>
+              <span class="ranked-pct">{{ t.sharePct }}%</span>
+            </div>
+            <div class="ranked-bar">
+              <span class="ranked-bar-fill" [style.width.%]="t.sharePct"></span>
+            </div>
+            <span class="ranked-sub">
+              {{ t.reports }} reports ·
+              <tabler-icon icon="thumb-down" [size]="12" />
+              {{ t.sharePct }}%
+            </span>
+          </div>
+        </li>
+      }
+    </ul>
+  </article>
+</section>
+
+<!-- Row 3: Volume trend chart | Heatmap -->
+<section class="feedback-row-3">
+  <article class="card trend-card">
+    <h3 class="card-title">Feedback Volume Trend</h3>
+    <div class="trend-legend">
+      <span class="legend-item legend-item--neg">
+        <span class="legend-dot"></span>Negative
+      </span>
+      <span class="legend-item legend-item--pos">
+        <span class="legend-dot"></span>Positive
+      </span>
+    </div>
+
+    <svg class="trend-svg" [attr.viewBox]="'0 0 ' + chartW + ' ' + chartH" preserveAspectRatio="none">
+      @for (t of yTicks(); track t.label) {
+        <line
+          class="trend-grid"
+          [attr.x1]="padL"
+          [attr.x2]="chartW - padR"
+          [attr.y1]="t.y"
+          [attr.y2]="t.y"
+        />
+        <text
+          class="trend-y-label"
+          [attr.x]="padL - 10"
+          [attr.y]="t.y + 3"
+          text-anchor="end"
+        >{{ t.label }}</text>
+      }
+
+      <path class="trend-area trend-area--pos" [attr.d]="positiveAreaPath()" />
+      <path class="trend-line trend-line--pos" [attr.d]="positiveLinePath()" />
+
+      <path class="trend-area trend-area--neg" [attr.d]="negativeAreaPath()" />
+      <path class="trend-line trend-line--neg" [attr.d]="negativeLinePath()" />
+
+      @for (t of xTicks(); track t.label) {
+        <text
+          class="trend-x-label"
+          [attr.x]="t.x"
+          [attr.y]="chartH - 12"
+          text-anchor="middle"
+        >{{ t.label }}</text>
+      }
+    </svg>
+  </article>
+
+  <article class="card heatmap-card">
+    <header class="heatmap-head">
+      <h3 class="card-title">Feedback Friction Areas by Topic Category</h3>
+      <div class="hm-mode-toggle" role="group" aria-label="Heatmap mode">
+        <button
+          type="button"
+          class="hm-mode-btn"
+          [class.is-active]="heatmapMode() === 'region'"
+          (click)="setHeatmapMode('region')"
+        >By Region</button>
+        <button
+          type="button"
+          class="hm-mode-btn"
+          [class.is-active]="heatmapMode() === 'vpu'"
+          (click)="setHeatmapMode('vpu')"
+        >By VPU</button>
+      </div>
+    </header>
+
+    <div class="heatmap-wrap">
+      <div class="heatmap-grid" [style.--cols]="heatmapColumns().length">
+        @for (row of heatmapData(); track $index; let rowIdx = $index) {
+          <span class="heatmap-row-label">{{ heatmapRows()[rowIdx] }}</span>
+          @for (cell of row; track $index) {
+            <span
+              class="heatmap-cell"
+              [style.background]="heatColor(cell)"
+              [attr.title]="heatmapRows()[rowIdx] + ' · ' + heatmapColumns()[$index].label.replace('\n', ' ') + ' · ' + (cell * 100).toFixed(0) + '%'"
+            ></span>
+          }
+        }
+      </div>
+
+      <div class="heatmap-col-labels" [style.--cols]="heatmapColumns().length">
+        @for (c of heatmapColumns(); track c.topicId) {
+          <a
+            class="heatmap-col-label"
+            routerLink="/prompts/analysis"
+            [queryParams]="{ topic: c.topicId }"
+          >{{ c.label }}</a>
+        }
+      </div>
+    </div>
+  </article>
+</section>

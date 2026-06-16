@@ -1,0 +1,74 @@
+<div class="dr-root" #rootEl>
+  <button
+    type="button"
+    class="dr-trigger"
+    [class.is-open]="open()"
+    (click)="toggleOpen()"
+  >
+    <tabler-icon icon="calendar-month" [size]="16" />
+    <span class="dr-trigger-label">{{ triggerLabel() }}</span>
+    <tabler-icon icon="chevron-down" [size]="14" />
+  </button>
+
+  @if (open()) {
+    <div class="dr-panel" role="menu">
+      @for (p of presets; track p.id) {
+        <button
+          type="button"
+          class="dr-row"
+          [class.is-selected]="selected() === p.id"
+          (click)="pickPreset(p.id)"
+        >
+          <span class="dr-row-radio" [class.is-selected]="selected() === p.id"></span>
+          <span class="dr-row-body">
+            <span class="dr-row-label">{{ p.label }}</span>
+            <span class="dr-row-range">{{ p.rangeLabel }}</span>
+          </span>
+        </button>
+      }
+
+      <div class="dr-divider"></div>
+
+      <button
+        type="button"
+        class="dr-row"
+        [class.is-selected]="selected() === 'custom'"
+        (click)="pickPreset('custom')"
+      >
+        <span class="dr-row-radio" [class.is-selected]="selected() === 'custom'"></span>
+        <span class="dr-row-body">
+          <span class="dr-row-label">Custom date range</span>
+        </span>
+      </button>
+
+      @if (selected() === 'custom') {
+        <div class="dr-custom">
+          <label class="dr-field">
+            <span class="dr-field-label">From</span>
+            <input
+              type="date"
+              [value]="customStart()"
+              (input)="customStart.set($any($event.target).value)"
+            />
+          </label>
+          <label class="dr-field">
+            <span class="dr-field-label">To</span>
+            <input
+              type="date"
+              [value]="customEnd()"
+              (input)="customEnd.set($any($event.target).value)"
+            />
+          </label>
+          <button
+            type="button"
+            class="dr-apply"
+            [disabled]="!customStart() || !customEnd()"
+            (click)="applyCustom()"
+          >
+            Apply
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

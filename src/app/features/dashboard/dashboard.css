@@ -1,0 +1,944 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* Map intensity ramp — monochrome blue, applied via data-intensity on each
+   <path>. 0 = no usage, 6 = highest usage. Tokens come from the Lift
+   primary scale defined in styles.css. */
+:host {
+  --map-i0: var(--color-neutral-solid-05);
+  --map-i1: var(--color-primary-20);
+  --map-i2: var(--color-primary-30);
+  --map-i3: var(--color-primary-40);
+  --map-i4: var(--color-primary-50);
+  --map-i5: var(--color-primary-60);
+  --map-i6: var(--color-primary-70);
+}
+
+/* =========================================================================
+   Dashboard (Home) — Lift Design System, light theme
+   ========================================================================= */
+
+/* ---------- Page header ---------- */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.welcome {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: 36px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  background: linear-gradient(90deg, #1A8FE3 0%, #449DF7 60%, #6BB6FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  flex: 0 0 auto;
+}
+
+.date-range-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-neutral-solid-15);
+  border-radius: 10px;
+  color: var(--color-neutral-solid-80);
+  font-family: inherit;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.date-range-btn:hover {
+  border-color: var(--color-neutral-solid-30);
+  background: var(--color-neutral-solid-05);
+}
+
+.date-range-btn tabler-icon {
+  color: var(--color-neutral-solid-60);
+}
+
+/* WB / IFC workspace toggle */
+.workspace-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ws-label {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--color-neutral-solid-50);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.ws-label.is-active {
+  color: var(--color-neutral-solid-90);
+  font-weight: 600;
+}
+
+.ws-switch {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  border-radius: 999px;
+  border: none;
+  background: var(--color-neutral-solid-20);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.18s ease;
+}
+
+.ws-switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ws-switch.is-on { background: #34D399; }
+.ws-switch.is-on .ws-switch-knob { transform: translateX(20px); }
+
+/* ---------- Section header ---------- */
+.dash-section { margin-bottom: 24px; }
+
+/* Last section (region/country map) stretches to fill remaining viewport */
+.dash-section.dash-section--fill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin-bottom: 0;
+}
+.dash-section.dash-section--fill > .region-panel {
+  flex: 1;
+  min-height: 0;
+}
+
+.dash-section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.dash-section-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--color-neutral-solid-05);
+  color: var(--color-neutral-solid-60);
+}
+
+.dash-section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-neutral-solid-80);
+}
+
+.dash-section-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--color-neutral-solid-10);
+}
+
+/* KPI card / grid styles moved to global styles.css so the same component
+   can be reused across pages (e.g. Assets Overview). */
+
+/* ---------- Region panel ---------- */
+.region-panel {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid var(--color-neutral-solid-10);
+  border-radius: 16px;
+  overflow: hidden;
+  /* No min-height — let flex:1 give it whatever space remains so the panel
+     bottom aligns with the sidebar NT avatar regardless of viewport size. */
+  min-height: 0;
+  display: flex;
+}
+
+/* Floating control row above the map: a separate Global button on the left
+   that returns the drawer to worldwide stats, and the By Region / By Country
+   toggle on the right. The whole row slides left when the drawer opens so
+   nothing is hidden behind it. */
+.map-mode-row {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: right 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.region-panel.is-drawer-open .map-mode-row {
+  right: calc(var(--drawer-w, 460px) + 22px);
+}
+
+/* Global button — distinct from the toggle. Blue gradient border via the
+   classic two-background trick (gradient on the border-box, white on the
+   padding-box). Persistent affordance to return to the global view. */
+.global-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+    linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%) border-box;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1D4ED8;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.12);
+  transition: box-shadow 0.15s ease, transform 0.1s ease;
+}
+.global-btn:hover {
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+}
+.global-btn:active { transform: translateY(1px); }
+.global-btn tabler-icon { color: #3B82F6; }
+
+.map-mode-toggle {
+  display: inline-flex;
+  gap: 6px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-neutral-solid-15);
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--color-neutral-solid-60);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mode-btn:hover { color: var(--color-primary-70); }
+
+.mode-btn.is-active {
+  background: var(--color-primary-20);
+  color: var(--color-primary-80);
+  font-weight: 500;
+}
+
+/* Inline-SVG map: viewport (clipped) wraps a transformed pan layer */
+.region-map-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  background:
+    radial-gradient(1200px 600px at 50% 0%, #F4F8FC 0%, #FFFFFF 60%);
+}
+
+.region-map-wrap.is-panning { cursor: grabbing; }
+
+.map-pan {
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  transition: transform 0.06s linear;
+}
+
+/* Note: the SVG is injected via [innerHTML], so its descendants don't carry
+   Angular's view-encapsulation attribute. ::ng-deep is required for these
+   selectors to apply to the inlined country paths. */
+:host ::ng-deep .map-pan svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+:host ::ng-deep .map-pan svg path {
+  fill: var(--map-i0);
+  stroke: #FFFFFF;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition: fill 0.12s ease, filter 0.12s ease;
+}
+:host ::ng-deep .map-pan svg path[data-intensity="1"] { fill: var(--map-i1); }
+:host ::ng-deep .map-pan svg path[data-intensity="2"] { fill: var(--map-i2); }
+:host ::ng-deep .map-pan svg path[data-intensity="3"] { fill: var(--map-i3); }
+:host ::ng-deep .map-pan svg path[data-intensity="4"] { fill: var(--map-i4); }
+:host ::ng-deep .map-pan svg path[data-intensity="5"] { fill: var(--map-i5); }
+:host ::ng-deep .map-pan svg path[data-intensity="6"] { fill: var(--map-i6); }
+
+:host ::ng-deep .map-pan svg path:hover {
+  filter: brightness(0.92);
+}
+
+:host ::ng-deep .map-pan svg path.is-active,
+:host ::ng-deep .map-pan svg path.is-active:hover {
+  fill: var(--color-primary-80);
+  filter: none;
+}
+
+/* ----- "By Region" overlay -----
+   When the toggle is set to By Region, fills stay intensity-driven but each
+   country's stroke flips to its region color and thickens. Reading the
+   regional grouping then becomes visually obvious. */
+:host {
+  --region-stroke-afe: #E07B39;  /* warm orange */
+  --region-stroke-afw: #C9A227;  /* amber */
+  --region-stroke-eap: #16A34A;  /* green */
+  --region-stroke-eca: #7C3AED;  /* violet */
+  --region-stroke-lac: #0E9DA6;  /* teal */
+  --region-stroke-mna: #DC2626;  /* red */
+  --region-stroke-sar: #DB2777;  /* magenta */
+}
+
+:host ::ng-deep .region-panel.mode-region .map-pan svg path {
+  stroke-width: 2;
+}
+:host ::ng-deep .region-panel.mode-region .map-pan svg path[data-region="afe"] { stroke: var(--region-stroke-afe); }
+:host ::ng-deep .region-panel.mode-region .map-pan svg path[data-region="afw"] { stroke: var(--region-stroke-afw); }
+:host ::ng-deep .region-panel.mode-region .map-pan svg path[data-region="eap"] { stroke: var(--region-stroke-eap); }
+:host ::ng-deep .region-panel.mode-region .map-pan svg path[data-region="eca"] { stroke: var(--region-stroke-eca); }
+:host ::ng-deep .region-panel.mode-region .map-pan svg path[data-region="lac"] { stroke: var(--region-stroke-lac); }
+:host ::ng-deep .region-panel.mode-region .map-pan svg path[data-region="mna"] { stroke: var(--region-stroke-mna); }
+:host ::ng-deep .region-panel.mode-region .map-pan svg path[data-region="sar"] { stroke: var(--region-stroke-sar); }
+
+/* Country labels — font-size is in SVG user units so labels scale with
+   the pan/zoom transform. A white halo (paint-order: stroke) keeps them
+   legible across all heatmap intensities. Keep this font-size in sync
+   with FONT_SIZE in dashboard.ts (used to estimate label widths). */
+:host ::ng-deep .map-pan svg text.country-label {
+  font-family: var(--font-display, system-ui);
+  font-weight: 400;
+  font-size: 7px;
+  fill: var(--color-neutral-solid-90);
+  stroke: none;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Flip text colors on high-intensity (dark) countries so the label
+   reads as light-on-dark instead of dark-on-dark. */
+:host ::ng-deep .map-pan svg text.country-label[data-intensity="5"],
+:host ::ng-deep .map-pan svg text.country-label[data-intensity="6"] {
+  fill: #FFFFFF;
+}
+
+/* Zoom controls — bottom-left, away from the right-side drawer */
+/* Usage-intensity legend — anchored bottom-center of the map. */
+.map-legend {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-neutral-solid-15);
+  border-radius: 999px;
+  padding: 6px 14px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+  font-size: 11.5px;
+  color: var(--color-neutral-solid-60);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.map-legend-label {
+  font-weight: 500;
+}
+
+.map-legend-ramp {
+  display: inline-flex;
+  align-items: center;
+}
+
+.map-legend-swatch {
+  width: 18px;
+  height: 12px;
+  display: inline-block;
+}
+.map-legend-swatch:first-child { border-radius: 3px 0 0 3px; }
+.map-legend-swatch:last-child  { border-radius: 0 3px 3px 0; }
+.map-legend-swatch[data-intensity="0"] { background: var(--map-i0); }
+.map-legend-swatch[data-intensity="1"] { background: var(--map-i1); }
+.map-legend-swatch[data-intensity="2"] { background: var(--map-i2); }
+.map-legend-swatch[data-intensity="3"] { background: var(--map-i3); }
+.map-legend-swatch[data-intensity="4"] { background: var(--map-i4); }
+.map-legend-swatch[data-intensity="5"] { background: var(--map-i5); }
+.map-legend-swatch[data-intensity="6"] { background: var(--map-i6); }
+
+.map-zoom-ctrls {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  z-index: 3;
+  display: inline-flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid var(--color-neutral-solid-15);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+}
+
+.map-zoom-ctrls button {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-neutral-solid-70);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.map-zoom-ctrls button + button {
+  border-top: 1px solid var(--color-neutral-solid-10);
+}
+
+.map-zoom-ctrls button:hover {
+  background: var(--color-neutral-solid-05);
+  color: var(--color-primary-70);
+}
+
+/* ---------- Country drawer (slides in from the right, drag-resizable) ---------- */
+.country-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  /* width is set via inline style.width.px, driven by the drawerWidth signal */
+  background: #FFFFFF;
+  border-left: 1px solid var(--color-neutral-solid-10);
+  box-shadow: -12px 0 28px rgba(15, 23, 42, 0.08);
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0.28s;
+  z-index: 2;
+}
+
+/* Drag handle — sits on the left edge of the drawer, expands hit area
+   slightly into the map so it's easy to grab. */
+.drawer-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -4px;            /* extends past the drawer edge into the map */
+  width: 10px;
+  cursor: ew-resize;
+  background: transparent;
+  z-index: 3;
+  user-select: none;
+}
+
+.drawer-resize-handle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: transparent;
+  border-radius: 2px;
+  transition: background 0.15s ease;
+}
+
+.drawer-resize-handle:hover::after,
+.drawer-resize-handle:active::after {
+  background: var(--color-primary-50);
+}
+
+.country-drawer.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0s;
+}
+
+.country-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.country-flag {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  overflow: hidden;
+}
+
+.country-detail-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--color-neutral-solid-90);
+}
+
+.country-rank-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--color-primary-20);
+  color: var(--color-primary-80);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.country-detail-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--color-neutral-solid-60);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.country-detail-close:hover {
+  background: var(--color-neutral-solid-05);
+  color: var(--color-neutral-solid-80);
+}
+
+.country-pills {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.country-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-neutral-solid-15);
+  background: #FFFFFF;
+  font-size: 12px;
+  color: var(--color-neutral-solid-70);
+}
+
+/* ---------- Country drawer stat grid (2 × 3) — fresh rebuild ---------- */
+.cstat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  width: 100%;
+  border: 1px solid var(--color-neutral-solid-10);
+  border-radius: 12px;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.cstat-cell {
+  flex: 0 0 33.3333%;
+  width: 33.3333%;
+  min-height: 72px;
+  box-sizing: border-box;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid var(--color-neutral-solid-10);
+  border-bottom: 1px solid var(--color-neutral-solid-10);
+}
+.cstat-grid > .cstat-cell:nth-child(3n)        { border-right: none; }
+.cstat-grid > .cstat-cell:nth-last-child(-n+3) { border-bottom: none; }
+
+.cstat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--color-neutral-solid-90);
+}
+
+.cstat-label {
+  display: block;
+  font-size: 12px;
+  color: var(--color-neutral-solid-60);
+}
+
+.country-vpus {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-neutral-solid-70);
+}
+
+.country-vpus-label {
+  color: var(--color-neutral-solid-60);
+  margin-right: 6px;
+}
+
+.country-vpus strong {
+  color: var(--color-neutral-solid-90);
+  font-weight: 600;
+}
+
+/* KPT tab bar */
+.kpt-tabs {
+  display: inline-flex;
+  gap: 24px;
+  border-bottom: 1px solid var(--color-neutral-solid-10);
+  margin-top: 4px;
+}
+
+.kpt-tab {
+  background: transparent;
+  border: none;
+  padding: 8px 0 10px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--color-neutral-solid-60);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.kpt-tab:hover { color: var(--color-neutral-solid-90); }
+
+.kpt-tab.is-active {
+  color: var(--color-primary-70);
+  font-weight: 600;
+}
+
+.kpt-tab.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--color-primary-70);
+  border-radius: 2px;
+}
+
+/* ---------- Per-tab Knowledge/People/Tasks stat row — fresh rebuild ---------- */
+.kstat-row {
+  display: flex;
+  flex-shrink: 0;
+  width: 100%;
+  border: 1px solid var(--color-neutral-solid-10);
+  border-radius: 12px;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.kstat-cell {
+  flex: 1 1 0;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid var(--color-neutral-solid-10);
+}
+.kstat-row > .kstat-cell:last-child { border-right: none; }
+
+.kstat-value {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--color-neutral-solid-90);
+}
+
+.kstat-label {
+  display: block;
+  font-size: 12.5px;
+  color: var(--color-neutral-solid-60);
+}
+
+.link-strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-primary-70);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.link-strong:hover { color: var(--color-primary-80); }
+
+/* ---------- Drawer content sections (Topics / Collections / Agents / Feedback) ---------- */
+.drawer-section { margin-top: 4px; }
+
+.drawer-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-neutral-solid-80);
+}
+
+.drawer-section-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-neutral-solid-80);
+}
+
+/* Topic treemap — replaces the previous pill list. Layout adapts to the
+   number of cells (2-5). Colours descend by rank with the rank-1 tile in the
+   strongest tone, matching the collection-detail treemap palette. */
+.topic-treemap {
+  display: grid;
+  gap: 5px;
+  min-height: 140px;
+}
+.topic-treemap[data-count="1"] { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.topic-treemap[data-count="2"] { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+.topic-treemap[data-count="3"] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.topic-treemap[data-count="3"] .topic-cell[data-rank="1"] { grid-column: span 2; }
+.topic-treemap[data-count="4"] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.topic-treemap[data-count="5"] {
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr 1fr;
+}
+.topic-treemap[data-count="5"] .topic-cell[data-rank="1"],
+.topic-treemap[data-count="5"] .topic-cell[data-rank="2"] { grid-column: span 3; }
+.topic-treemap[data-count="5"] .topic-cell[data-rank="3"],
+.topic-treemap[data-count="5"] .topic-cell[data-rank="4"],
+.topic-treemap[data-count="5"] .topic-cell[data-rank="5"] { grid-column: span 2; }
+
+.topic-cell {
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #FFFFFF;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.topic-cell:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.topic-cell:focus-visible {
+  outline: 2px solid var(--color-primary-50);
+  outline-offset: 2px;
+}
+.topic-cell[data-rank="1"] { background: #1B6F8F; }
+.topic-cell[data-rank="2"] { background: #2A8AAF; }
+.topic-cell[data-rank="3"] { background: #2EA3CC; }
+.topic-cell[data-rank="4"] { background: #46BAD7; }
+.topic-cell[data-rank="5"] { background: #76CFE0; color: #0F4E63; }
+
+.topic-cell-label {
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.topic-cell-pct {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+/* Top Collections list */
+.collection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.collection-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--color-neutral-solid-05);
+  font-size: 13.5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.collection-row:hover { background: var(--color-neutral-solid-10); }
+.collection-row:hover .collection-name { color: var(--color-primary-70); }
+
+.collection-name {
+  color: var(--color-neutral-solid-90);
+  font-weight: 500;
+}
+
+.collection-views {
+  color: var(--color-neutral-solid-60);
+}
+
+/* Top Agents — bar shows usage % */
+.agent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agent-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 40px;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 0;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.agent-row:hover { background: var(--color-neutral-solid-05); }
+.agent-row:hover .agent-name { color: var(--color-primary-70); }
+
+.agent-name {
+  font-size: 13.5px;
+  color: var(--color-neutral-solid-80);
+}
+
+.agent-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-neutral-solid-10);
+  overflow: hidden;
+}
+
+.agent-bar-fill {
+  display: block;
+  height: 100%;
+  background: #0F7A8C;  /* teal */
+  border-radius: inherit;
+}
+
+.agent-pct {
+  font-size: 13px;
+  color: var(--color-neutral-solid-70);
+  text-align: right;
+}
+
+/* Feedback Provided cards */
+.feedback-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.feedback-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-neutral-solid-10);
+  border-radius: 10px;
+  background: #FFFFFF;
+}
+
+.feedback-card--positive tabler-icon { color: #15803D; }
+.feedback-card--negative tabler-icon { color: #DC2626; }
+
+.feedback-value {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.feedback-card--positive .feedback-value { color: #15803D; }
+.feedback-card--negative .feedback-value { color: #DC2626; }
+
+.feedback-label {
+  font-size: 12px;
+  color: var(--color-neutral-solid-60);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1180px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+}

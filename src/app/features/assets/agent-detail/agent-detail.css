@@ -1,0 +1,267 @@
+:host {
+  display: block;
+  width: 100%;
+  padding-top: 32px;
+}
+
+/* ============= Header ============= */
+.ad-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.ad-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ad-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-primary-70);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.ad-back:hover { color: var(--color-primary-80); }
+
+.ad-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--color-neutral-solid-90);
+}
+
+/* Filter bar — same pattern as the Assets page */
+.assets-filter-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-neutral-solid-15);
+  border-radius: 10px;
+  color: var(--color-neutral-solid-80);
+  font-family: inherit;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.filter-btn:hover {
+  border-color: var(--color-neutral-solid-30);
+  background: var(--color-neutral-solid-05);
+}
+.filter-btn tabler-icon { color: var(--color-neutral-solid-60); }
+
+.ws-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.ws-label {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--color-neutral-solid-50);
+  cursor: pointer;
+}
+.ws-label.is-active {
+  color: var(--color-neutral-solid-90);
+  font-weight: 600;
+}
+.ws-switch {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  border-radius: 999px;
+  border: none;
+  background: var(--color-neutral-solid-20);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.18s ease;
+}
+.ws-switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ws-switch.is-on { background: var(--color-primary-50); }
+.ws-switch.is-on .ws-switch-knob { transform: translateX(20px); }
+
+/* Feedback row inside the Feedback KPI card */
+.ad-feedback {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  margin-top: auto;
+}
+.ad-feedback-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+.ad-feedback-item--positive tabler-icon,
+.ad-feedback-item--positive strong { color: #15803D; }
+.ad-feedback-item--negative tabler-icon,
+.ad-feedback-item--negative strong { color: #DC2626; }
+
+/* ============= Two-panel split ============= */
+.ad-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.ad-panel {
+  background: #FFFFFF;
+  border: 1px solid var(--color-neutral-solid-10);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ad-panel-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-neutral-solid-90);
+}
+
+/* Tabs inside the Prompt Categories panel */
+.ad-panel-tabs {
+  display: inline-flex;
+  gap: 22px;
+  border-bottom: 1px solid var(--color-neutral-solid-10);
+}
+.ad-panel-tab {
+  background: transparent;
+  border: none;
+  padding: 6px 0 8px;
+  font: inherit;
+  font-size: 13.5px;
+  color: var(--color-neutral-solid-60);
+  cursor: pointer;
+  position: relative;
+}
+.ad-panel-tab.is-active { color: var(--color-primary-70); font-weight: 600; }
+.ad-panel-tab.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--color-primary-70);
+  border-radius: 2px;
+}
+
+/* Collections table */
+.ad-coll-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.ad-coll-table thead th {
+  text-align: left;
+  background: var(--color-neutral-solid-05);
+  border-top: 1px solid var(--color-neutral-solid-10);
+  border-bottom: 1px solid var(--color-neutral-solid-10);
+  padding: 12px 18px;
+  font-weight: 500;
+  color: var(--color-neutral-solid-70);
+  white-space: nowrap;
+}
+.ad-coll-table tbody td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--color-neutral-solid-10);
+}
+.ad-coll-table tbody tr:last-child td { border-bottom: none; }
+
+.reg-sort-th {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.reg-sort-caret { color: var(--color-neutral-solid-40); transition: color 0.12s ease; }
+.reg-sort-caret.is-active { color: var(--color-primary-70); }
+.reg-sort-th:hover .reg-sort-caret { color: var(--color-neutral-solid-70); }
+
+.reg-cell-link {
+  color: var(--color-primary-70);
+  text-decoration: none;
+}
+.reg-cell-link:hover { color: var(--color-primary-80); text-decoration: underline; }
+
+/* ----- Treemap (Prompt Categories) ----- */
+.treemap {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 6px;
+  flex: 1;
+  min-height: 280px;
+}
+.treemap-tile {
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #FFFFFF;
+  min-height: 0;
+  overflow: hidden;
+}
+.treemap-tile[data-rank="1"] { grid-column: span 4; grid-row: span 1; background: #115E73; }
+.treemap-tile[data-rank="2"] { grid-column: span 2; grid-row: span 1; background: #2A8AAF; }
+.treemap-tile[data-rank="3"] { grid-column: span 2; grid-row: span 1; background: #2EA3CC; }
+.treemap-tile[data-rank="4"] { grid-column: span 2; grid-row: span 1; background: #46BAD7; }
+.treemap-tile[data-rank="5"] { grid-column: span 2; grid-row: span 1; background: #76CFE0; color: #0F4E63; }
+
+.treemap-tile-label {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+}
+.treemap-tile-stats {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 12.5px;
+}
+.treemap-tile-stats strong { font-size: 18px; font-weight: 700; }
+.treemap-tile-dot { opacity: 0.7; }

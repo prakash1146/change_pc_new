@@ -1,0 +1,82 @@
+<aside class="sidebar" [class.is-expanded]="expanded()" [attr.aria-expanded]="expanded()">
+  <a class="logo" aria-label="control-tower">
+    <img src="assets/images/globe.svg" width="44" height="44" alt="" class="logo-icon" />
+    <span class="brand-name">Control Tower</span>
+  </a>
+
+  <nav class="nav">
+    @for (item of nav(); track item.label) {
+      @if (item.sectionId; as sid) {
+        <button
+          type="button"
+          class="nav-item"
+          [class.is-active]="activeSection() === sid"
+          (click)="goToSection(sid)"
+          [attr.aria-label]="item.label"
+        >
+          @if (item.svg) {
+            <img class="nav-icon" [src]="item.svg" alt="" />
+          } @else {
+            <tabler-icon [icon]="item.icon!" [size]="22" />
+          }
+          <span class="nav-label">{{ item.label }}</span>
+        </button>
+      } @else {
+        <a class="nav-item" [attr.aria-label]="item.label">
+          @if (item.svg) {
+            <img class="nav-icon" [src]="item.svg" alt="" />
+          } @else {
+            <tabler-icon [icon]="item.icon!" [size]="22" />
+          }
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      }
+    }
+  </nav>
+
+  <div class="sidebar-footer">
+    @for (item of footerLinks; track item.label) {
+      <a class="nav-item" [attr.aria-label]="item.label">
+        <tabler-icon [icon]="item.icon" [size]="22" />
+        <span class="nav-label">{{ item.label }}</span>
+      </a>
+    }
+
+    <button
+      class="nav-item toggle"
+      type="button"
+      (click)="toggle()"
+      [attr.aria-label]="expanded() ? 'Collapse sidebar' : 'Expand sidebar'"
+    >
+      <tabler-icon
+        [icon]="expanded() ? 'layout-sidebar-left-collapse' : 'layout-sidebar-left-expand'"
+        [size]="22"
+      />
+      <span class="nav-label">Collapse</span>
+    </button>
+      @if (isAuthenticated()) {
+         <div class="avatar-row">
+      
+        <button
+          class="nav-item sign-out"
+          type="button"
+          (click)="signOut()"
+          aria-label="Sign out"
+        >
+          <tabler-icon icon="arrows-right-left" [size]="18" />
+          @if (expanded()) {
+            <span class="nav-label" [@labelFade]="'shown'">Sign out</span>
+          }
+        </button>
+      
+    </div>
+  }
+
+    <div class="avatar-row">
+      <div class="avatar" [attr.aria-label]="userName()">{{ userInitials() }}</div>
+      @if (expanded()) {
+        <span class="avatar-name">{{ userName() }}</span>
+      }
+    </div>
+  </div>
+</aside>

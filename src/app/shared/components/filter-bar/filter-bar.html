@@ -1,0 +1,196 @@
+<!-- Date Range -->
+<div class="filter" [class.is-open]="openFilter() === 'date'">
+  <button
+    class="filter-trigger"
+    type="button"
+    (click)="toggleFilter('date')"
+    [attr.aria-expanded]="openFilter() === 'date'"
+  >
+    <tabler-icon icon="calendar-month" [size]="16" />
+    <span class="filter-label">Date Range</span>
+    <span class="filter-value">{{ dateLabel() }}</span>
+    <tabler-icon icon="chevron-down" [size]="14" class="caret" />
+  </button>
+  @if (openFilter() === 'date') {
+    <div class="dropdown-backdrop" (click)="closeFilter()"></div>
+    <div class="dropdown list-dropdown" role="listbox">
+      <div class="dropdown-body">
+        @for (r of dateRanges; track r) {
+          <button
+            type="button"
+            class="dropdown-item"
+            [class.is-active]="selectedDate() === r"
+            (click)="pickDate(r)"
+          >
+            <span class="item-text">{{ r }}</span>
+            @if (selectedDate() === r) {
+              <tabler-icon icon="check" [size]="14" />
+            }
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Country -->
+<div class="filter" [class.is-open]="openFilter() === 'country'">
+  <button
+    class="filter-trigger"
+    type="button"
+    (click)="toggleFilter('country')"
+    [attr.aria-expanded]="openFilter() === 'country'"
+  >
+    <tabler-icon icon="flag" [size]="16" />
+    <span class="filter-label">Country</span>
+    <span class="filter-value">{{ countryLabel() }}</span>
+    <tabler-icon icon="chevron-down" [size]="14" class="caret" />
+  </button>
+  @if (openFilter() === 'country') {
+    <div class="dropdown-backdrop" (click)="closeFilter()"></div>
+    <div class="dropdown list-dropdown country-dropdown" role="listbox">
+      <div class="dropdown-search">
+        <tabler-icon icon="search" [size]="14" />
+        <input
+          type="text"
+          placeholder="Search countries..."
+          [value]="searchQuery()"
+          (input)="onSearchInput($any($event.target).value)"
+          (keydown.escape)="closeFilter()"
+          autofocus
+        />
+      </div>
+      <div class="dropdown-body">
+        @if (!searchQuery()) {
+          <button
+            type="button"
+            class="dropdown-item"
+            [class.is-active]="selectedCountry() === 'Global'"
+            (click)="pickCountry('Global')"
+          >
+            <span class="item-text">Global</span>
+            @if (selectedCountry() === 'Global') {
+              <tabler-icon icon="check" [size]="14" />
+            }
+          </button>
+        }
+        @for (g of filteredCountryGroups(); track g.code) {
+          <div class="dropdown-section" [attr.data-region]="g.code">
+            <span class="dropdown-section-code" [attr.data-region]="g.code">{{ g.code }}</span>
+            <span class="dropdown-section-label">{{ g.region }}</span>
+            <span class="dropdown-section-count">{{ g.countries.length }}</span>
+          </div>
+          @for (c of g.countries; track c) {
+            <button
+              type="button"
+              class="dropdown-item"
+              [class.is-active]="selectedCountry() === c"
+              (click)="pickCountry(c)"
+            >
+              <span class="item-text">{{ c }}</span>
+              @if (selectedCountry() === c) {
+                <tabler-icon icon="check" [size]="14" />
+              }
+            </button>
+          }
+        }
+        @if (!hasCountryMatches()) {
+          <p class="dropdown-empty">No countries match "{{ searchQuery() }}".</p>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<!-- VPU -->
+<div class="filter" [class.is-open]="openFilter() === 'vpu'">
+  <button
+    class="filter-trigger"
+    type="button"
+    (click)="toggleFilter('vpu')"
+    [attr.aria-expanded]="openFilter() === 'vpu'"
+  >
+    <tabler-icon icon="layout-grid" [size]="16" />
+    <span class="filter-label">VPU</span>
+    <span class="filter-value">{{ vpuLabel() }}</span>
+    <tabler-icon icon="chevron-down" [size]="14" class="caret" />
+  </button>
+  @if (openFilter() === 'vpu') {
+    <div class="dropdown-backdrop" (click)="closeFilter()"></div>
+    <div class="dropdown list-dropdown" role="listbox">
+      <div class="dropdown-search">
+        <tabler-icon icon="search" [size]="14" />
+        <input
+          type="text"
+          placeholder="Search VPUs..."
+          [value]="searchQuery()"
+          (input)="onSearchInput($any($event.target).value)"
+          (keydown.escape)="closeFilter()"
+          autofocus
+        />
+      </div>
+      <div class="dropdown-body">
+        @for (v of filteredVpus(); track v) {
+          <button
+            type="button"
+            class="dropdown-item"
+            [class.is-active]="selectedVpu() === v"
+            (click)="pickVpu(v)"
+          >
+            <span class="item-text">{{ v }}</span>
+            @if (selectedVpu() === v) {
+              <tabler-icon icon="check" [size]="14" />
+            }
+          </button>
+        }
+        @if (!hasVpuMatches()) {
+          <p class="dropdown-empty">No VPUs match "{{ searchQuery() }}".</p>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Sector -->
+<div class="filter" [class.is-open]="openFilter() === 'sector'">
+  <button
+    class="filter-trigger"
+    type="button"
+    (click)="toggleFilter('sector')"
+    [attr.aria-expanded]="openFilter() === 'sector'"
+  >
+    <tabler-icon icon="category" [size]="16" />
+    <span class="filter-label">Sector</span>
+    <span class="filter-value">{{ sectorLabel() }}</span>
+    <tabler-icon icon="chevron-down" [size]="14" class="caret" />
+  </button>
+  @if (openFilter() === 'sector') {
+    <div class="dropdown-backdrop" (click)="closeFilter()"></div>
+    <div class="dropdown list-dropdown" role="listbox">
+      <div class="dropdown-body">
+        @for (s of sectors; track s) {
+          <button
+            type="button"
+            class="dropdown-item"
+            [class.is-active]="selectedSector() === s"
+            (click)="pickSector(s)"
+          >
+            <span class="item-text">{{ s }}</span>
+            @if (selectedSector() === s) {
+              <tabler-icon icon="check" [size]="14" />
+            }
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<div class="filter-actions">
+  <button type="button" aria-label="Download">
+    <tabler-icon icon="download" [size]="18" />
+  </button>
+  <button type="button" aria-label="Sync">
+    <tabler-icon icon="refresh" [size]="18" />
+  </button>
+</div>

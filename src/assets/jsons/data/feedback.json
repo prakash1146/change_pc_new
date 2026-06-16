@@ -1,0 +1,65 @@
+{
+  "activeUsers": { "value": "3,095", "delta": "+12%", "sub": "of ~18,500 WBG staff" },
+  "uniqueWithFeedback": { "value": "28%", "delta": "+3pp", "sub": "870 staff left feedback" },
+  "totalFeedback": {
+    "value": "1,496",
+    "positivePct": 72,
+    "negativePct": 28
+  },
+
+  "flaggedCategories": [
+    [
+      { "id": "eg",  "name": "Macroeconomic Research",           "pct": 28, "count": 79, "color": "#c4385c" },
+      { "id": "ml",  "name": "Labor & Social Policy",            "pct": 17, "count": 47, "color": "#d44e74", "trending": true },
+      { "id": "oth", "name": "General Queries",                  "pct": 14, "count": 40, "color": "#b85c72" }
+    ],
+    [
+      { "id": "exp", "name": "Expert & People Discovery",        "pct": 13, "count": 37, "color": "#df7090" },
+      { "id": "cli", "name": "Climate, Energy & Infrastructure", "pct": 11, "count": 31, "color": "#c8647c" },
+      { "id": "les", "name": "Project Lessons & Evidence",       "pct": 9,  "count": 26, "color": "#da8294" },
+      { "id": "hf",  "name": "Housing & Urban Finance",          "pct": 8,  "count": 22, "color": "#e496a6" }
+    ]
+  ],
+
+  "flaggedCollections": [
+    { "rank": 1, "title": "Policy Research Working Papers", "prompts": 184, "negativePct": 31 },
+    { "rank": 2, "title": "Country Economic Updates",       "prompts": 142, "negativePct": 26 },
+    { "rank": 3, "title": "IFC Insights and Reports",       "prompts":  98, "negativePct": 22 }
+  ],
+
+  "topNegativeTypes": [
+    { "title": "Not factually correct",       "reports": 412, "sharePct": 38, "icon": "alert-triangle" },
+    { "title": "Missing source citations",    "reports": 287, "sharePct": 27, "icon": "message-report" },
+    { "title": "Did not follow instructions", "reports": 196, "sharePct": 18, "icon": "target" }
+  ],
+
+  "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "yAxisTicks": [0, 20, 40, 60, 80, 100],
+
+  "positiveSeries": [32, 38, 30, 35, 28, 36, 50, 64, 70, 72, 70, 68],
+  "negativeSeries": [8, 12, 11, 14, 10, 11, 16, 24, 18, 25, 18, 14],
+
+  "heatmapColumns": [
+    { "label": "Ghana Economic\nGrowth",    "topicId": "eg" },
+    { "label": "Morocco Labor\nMarkets",    "topicId": "ml" },
+    { "label": "Climate &\nInfrastructure", "topicId": "cli-adapt" },
+    { "label": "TOR\nGeneration",           "topicId": "tor" },
+    { "label": "Housing &\nFinance",        "topicId": "hf" }
+  ],
+
+  "heatmapRowsRegion": ["SAR", "AFW", "AFE", "EAP"],
+  "heatmapRowsVpu": ["AFWW1", "AFCE2", "AFCE1", "AECE1"],
+
+  "heatmapDataRegion": [
+    [0.08, 0.10, 0.10, 0.10, 0.40],
+    [0.32, 0.10, 0.10, 0.08, 0.10],
+    [0.10, 0.30, 0.90, 0.10, 0.10],
+    [0.10, 0.55, 0.10, 0.10, 0.10]
+  ],
+  "heatmapDataVpu": [
+    [0.10, 0.45, 0.20, 0.15, 0.30],
+    [0.50, 0.10, 0.15, 0.20, 0.10],
+    [0.15, 0.25, 0.85, 0.10, 0.10],
+    [0.10, 0.65, 0.10, 0.30, 0.20]
+  ]
+}
